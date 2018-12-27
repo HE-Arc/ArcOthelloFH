@@ -22,10 +22,10 @@ namespace Orthello
     public partial class MainWindow : Window
     {
         private OthelloGrid grid;
+
         public MainWindow()
         {
             InitializeComponent();
-
             grid = new OthelloGrid(6,7);
             MainDockPanel.Children.Add(grid);
         }

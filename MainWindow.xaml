@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Orthello"
+        xmlns:ui="clr-namespace:Othello.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="478.125" Width="814.061">
     <Grid>
-        <DockPanel x:Name="MainDockPanel" Margin="10,10,9.6,10">
-            <Canvas Width="100" Background="Black" DockPanel.Dock="Left">
-                <Image Height="78" Canvas.Top="247" Width="90" Source="Resources/White_Pawn.png"/>
-            </Canvas>
-            <Canvas Width="100" Background="Black" DockPanel.Dock="Right"/>
+        <DockPanel x:Name="MainDockPanel" Margin="10">
+            <ui:PlayerUI DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left"/>
+            <ui:PlayerUI DockPanel.Dock="Right" Height="Auto" Width="130" HorizontalAlignment="Right"/>
         </DockPanel>
     </Grid>
 </Window>
