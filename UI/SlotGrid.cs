@@ -31,19 +31,16 @@ namespace Orthello.UI
 
     class SlotGrid : Button
     {
-        private static readonly Image BLACK_PAWN = null;
-        private static readonly Image WHITE_PAWN = null;
+        private static readonly BitmapImage BLACK_PAWN = null;
+        private static readonly BitmapImage WHITE_PAWN = null;
 
         static SlotGrid()
         {
-            BLACK_PAWN = new Image();
-            WHITE_PAWN = new Image();
-
             Uri blackPawnUri = new Uri("pack://application:,,,/Othello;component/Resources/Black_Pawn.png", UriKind.Absolute);
             Uri whitePawnUri = new Uri("pack://application:,,,/Othello;component/Resources/White_Pawn.png", UriKind.Absolute);
 
-            BLACK_PAWN.Source = new BitmapImage(blackPawnUri);
-            WHITE_PAWN.Source = new BitmapImage(whitePawnUri);
+            BLACK_PAWN = new BitmapImage(blackPawnUri);
+            WHITE_PAWN = new BitmapImage(whitePawnUri);
         }
 
         /// <summary>
@@ -54,7 +51,6 @@ namespace Orthello.UI
         public SlotGrid(int row, int column): base()
         {
             this.Style = this.FindResource("slotStyle") as Style;
-
             this.AttributeName(row, column);
         }
 
@@ -91,15 +87,15 @@ namespace Orthello.UI
         {
             if (contentType == 0)
             {
-                this.Content = WHITE_PAWN;
+                Image img = new Image();
+                img.Source = WHITE_PAWN;
+                this.Content = img;
             }
             if (contentType == 1)
             {
-                this.Content = BLACK_PAWN;
-            }
-            else
-            {
-                this.Content = null;
+                Image img = new Image();
+                img.Source = BLACK_PAWN;
+                this.Content = img;
             }
         }
     }

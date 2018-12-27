@@ -54,6 +54,7 @@ namespace Othello.UI
         {
             SlotGrid slot = sender as SlotGrid;
 
+            // Todo: use an enum instead integer
             slot.SetContent(0);
             GridPos position = slot.GetPosition();
             Console.WriteLine("Position: " + position.Row + ":" + position.Column);
