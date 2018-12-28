@@ -1,4 +1,4 @@
-﻿<Window x:Class="Orthello.MainWindow"
+﻿<Window x:Name="win_main" x:Class="Orthello.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,11 +6,7 @@
         xmlns:local="clr-namespace:Orthello"
         xmlns:ui="clr-namespace:Othello.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="478.125" Width="814.061">
-    <Grid>
-        <DockPanel x:Name="MainDockPanel" Margin="10">
-            <ui:PlayerUI DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left"/>
-            <ui:PlayerUI DockPanel.Dock="Right" Height="Auto" Width="130" HorizontalAlignment="Right"/>
-        </DockPanel>
+        Title="Othello ARC" Height="478.125" Width="814.061">
+    <Grid x:Name="grid_main">
     </Grid>
 </Window>
