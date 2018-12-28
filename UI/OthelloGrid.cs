@@ -1,4 +1,5 @@
 ﻿using Orthello.UI;
+using Othello.Data;
 using System;
 using System.Text;
 using System.Windows;
@@ -9,13 +10,11 @@ namespace Othello.UI
 {
     class OthelloGrid: Grid
     {
-        private int rows;
-        private int columns;
+        private OthelloLogic logic;
 
-        public OthelloGrid(int rows, int columns): base()
+        public OthelloGrid(OthelloLogic logic) : base()
         {
-            this.rows = rows;
-            this.columns = columns;
+            this.logic = logic;
 
             this.PrepareGeometry();
         }
@@ -24,24 +23,25 @@ namespace Othello.UI
         {
             StringBuilder builder = new StringBuilder();
 
-            for (int row = 0; row < rows; row++)
+            for (int row = 0; row < logic.Rows; row++)
             {
                 RowDefinition rowDef = new RowDefinition();
                 this.RowDefinitions.Add(rowDef);
             }
 
-            for (int column = 0; column < columns; column++)
+            for (int column = 0; column < logic.Columns; column++)
             {
                 ColumnDefinition columnDef = new ColumnDefinition();
                 this.ColumnDefinitions.Add(columnDef);
             }
 
-            for(int row = 0;row < rows; row++)
+            for(int row = 0;row < logic.Rows; row++)
             {
-                for (int column = 0; column < columns; column++)
+                for (int column = 0; column < logic.Columns; column++)
                 {
                     SlotGrid slot = new SlotGrid(row, column);
                     slot.Click += OnClickEvent;
+                    slot.SetContent((EnumSlot)logic.GameBoard[row, column]);
 
                     this.Children.Add(slot);
                     Grid.SetRow(slot, row);
@@ -53,10 +53,11 @@ namespace Othello.UI
         public void OnClickEvent(Object sender, RoutedEventArgs args)
         {
             SlotGrid slot = sender as SlotGrid;
-
-            // Todo: use an enum instead integer
-            slot.SetContent(0);
             GridPos position = slot.GetPosition();
+
+            EnumSlot enumSlot = EnumSlot.White;
+            slot.SetContent(enumSlot);
+            logic.GameBoard[position.Row, position.Column] = (int)enumSlot;
             Console.WriteLine("Position: " + position.Row + ":" + position.Column);
         }
     }

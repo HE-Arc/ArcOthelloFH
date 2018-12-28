@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Othello.Data;
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -83,15 +84,15 @@ namespace Orthello.UI
         }
 
         // Todo: Modify the parameter with enum
-        public void SetContent(int contentType)
+        public void SetContent(EnumSlot slot)
         {
-            if (contentType == 0)
+            if (slot == EnumSlot.White)
             {
                 Image img = new Image();
                 img.Source = WHITE_PAWN;
                 this.Content = img;
             }
-            if (contentType == 1)
+            else if (slot == EnumSlot.Black)
             {
                 Image img = new Image();
                 img.Source = BLACK_PAWN;
