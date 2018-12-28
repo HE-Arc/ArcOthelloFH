@@ -21,13 +21,26 @@ namespace Orthello
     /// </summary>
     public partial class MainWindow : Window
     {
-        private OthelloGrid grid;
+        private MainMenuUI menuUi = new MainMenuUI();
+        private GameUI gameUi = new GameUI();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            grid = new OthelloGrid(6,7);
-            MainDockPanel.Children.Add(grid);
+            LaunchMainMenu();
+        }
+
+        public void LaunchMainMenu()
+        {
+            grid_main.Children.Clear();
+            grid_main.Children.Add(menuUi);
+        }
+
+        public void LaunchShowGame()
+        {
+            grid_main.Children.Clear();
+            grid_main.Children.Add(gameUi);
         }
     }
 }

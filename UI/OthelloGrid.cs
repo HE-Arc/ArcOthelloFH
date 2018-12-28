@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Orthello.UI;
+using System;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Othello.UI
 {
@@ -17,11 +17,13 @@ namespace Othello.UI
             this.rows = rows;
             this.columns = columns;
 
-            this.prepareGeometry();
+            this.PrepareGeometry();
         }
 
-        public void prepareGeometry()
+        public void PrepareGeometry()
         {
+            StringBuilder builder = new StringBuilder();
+
             for (int row = 0; row < rows; row++)
             {
                 RowDefinition rowDef = new RowDefinition();
@@ -38,13 +40,24 @@ namespace Othello.UI
             {
                 for (int column = 0; column < columns; column++)
                 {
-                    Button button = new Button();
+                    SlotGrid slot = new SlotGrid(row, column);
+                    slot.Click += OnClickEvent;
 
-                    this.Children.Add(button);
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, column);
+                    this.Children.Add(slot);
+                    Grid.SetRow(slot, row);
+                    Grid.SetColumn(slot, column);
                 }
             }
+        }
+
+        public void OnClickEvent(Object sender, RoutedEventArgs args)
+        {
+            SlotGrid slot = sender as SlotGrid;
+
+            // Todo: use an enum instead integer
+            slot.SetContent(0);
+            GridPos position = slot.GetPosition();
+            Console.WriteLine("Position: " + position.Row + ":" + position.Column);
         }
     }
 }
