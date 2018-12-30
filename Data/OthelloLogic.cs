@@ -31,6 +31,8 @@ namespace Othello.Data
 
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
+
+            AnalyzeGameBoard();
         }
 
         public void InitPlayersData()
@@ -56,6 +58,62 @@ namespace Othello.Data
             gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column] = (int)SlotContent.Black;
             gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column + 1] = (int)SlotContent.Black;
             gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column + 1] = (int)SlotContent.White;
+        }
+
+        public bool IsPositionValid(IntPosition position)
+        {
+            return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
+        }
+
+        public PlayerColor GetOppositePlayerColor(PlayerColor color)
+        {
+            PlayerColor result;
+
+            if(color == PlayerColor.White)
+            {
+                result = PlayerColor.Black;
+            }
+            else
+            {
+                result = PlayerColor.White;
+            }
+
+            return result;
+        }
+
+        public List<IntPosition> GetNeighborsDirections(IntPosition position)
+        {
+            List<IntPosition> directionsList = new List<IntPosition>();
+            PlayerColor currentPlayer = playerColorTurn;
+            PlayerColor oppositePlayer = GetOppositePlayerColor(currentPlayer);
+            
+            for(int rowDelta = -1; rowDelta <= 1; rowDelta++)
+            {
+                for(int columnDelta = -1; columnDelta <= 1; columnDelta++)
+                {
+                    IntPosition nextPosition = new IntPosition(position.Row + rowDelta, position.Column + columnDelta);
+                    int slotContentId = gameBoard[nextPosition.Row, nextPosition.Column];
+
+                    if ((position.Row != nextPosition.Row || position.Column != nextPosition.Column) &&
+                       slotContentId == (int)oppositePlayer && 
+                       IsPositionValid(nextPosition))
+                    {
+                        directionsList.Add(new IntPosition(rowDelta, columnDelta));
+                    }
+                }
+            }
+
+            return directionsList;
+        }
+
+        public void AnalyzeGameBoard()
+        {
+            List<IntPosition> directionsList = GetNeighborsDirections(new IntPosition(3,3));
+
+            foreach(IntPosition direction in directionsList)
+            {
+                Console.WriteLine(direction);
+            }
         }
 
         public PlayerData GetPlayerDataFromColor(PlayerColor color)
