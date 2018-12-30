@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\IntPosition.cs" />
     <Compile Include="Data\OthelloLogic.cs" />
     <Compile Include="Data\PlayerData.cs" />
     <Compile Include="IA\IA.cs" />
