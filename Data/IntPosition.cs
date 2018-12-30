@@ -17,6 +17,17 @@ namespace Othello.Data
             this.column = column;
         }
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(this.GetType().Name);
+            builder.Append(":");
+            builder.Append(row);
+            builder.Append(":");
+            builder.Append(column);
+            return builder.ToString();
+        }
+
         public int Row
         {
             get { return this.row; }
