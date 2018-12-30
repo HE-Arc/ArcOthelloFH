@@ -8,28 +8,6 @@ using System.Windows.Media.Imaging;
 
 namespace Orthello.UI
 {
-    struct GridPos
-    {
-        private int row;
-        private int column;
-
-        public GridPos(int row = -1, int column = -1)
-        {
-            this.row = row;
-            this.column = column;
-        }
-
-        public int Row
-        {
-            get { return this.row; }
-        }
-
-        public int Column
-        {
-            get { return this.column; }
-        }
-    }
-
     class SlotGrid : Button
     {
         private static readonly BitmapImage BLACK_PAWN = null;
@@ -75,12 +53,12 @@ namespace Orthello.UI
         /// Get the position of the slot (parsing the name which contains the info)
         /// </summary>
         /// <returns>Position in the grid of the current component</returns>
-        public GridPos GetPosition()
+        public IntPosition GetPosition()
         {
             String[] splitted = this.Name.Split('_');
             int row = int.Parse(splitted[1]);
             int column = int.Parse(splitted[2]);
-            return new GridPos(row, column);
+            return new IntPosition(row, column);
         }
 
         // Todo: Modify the parameter with enum
