@@ -53,7 +53,7 @@ namespace Othello.UI
         public void OnClickEvent(Object sender, RoutedEventArgs args)
         {
             SlotGrid slot = sender as SlotGrid;
-            GridPos position = slot.GetPosition();
+            IntPosition position = slot.GetPosition();
 
             SlotContent enumSlot = SlotContent.White;
             slot.SetContent(enumSlot);

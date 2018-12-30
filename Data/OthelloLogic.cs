@@ -16,29 +16,34 @@ namespace Othello.Data
         private int[,] gameBoard;
         private PlayerColor playerColorTurn;
 
-        public OthelloLogic(int rows = 7, int columns = 9, int initialPawnRow = 3, int initialPawnColumn = 3)
+        public OthelloLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
-            InitAll(rows, columns, initialPawnRow, initialPawnColumn);
         }
 
-        public void InitAll(int rows, int columns, int initialPawnRow, int initialPawnColumn)
+        public OthelloLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
-            playerData = new PlayerData[NUMBER_OF_PLAYERS];
-            gameBoard = new int[rows, columns];
+            InitAll(gridSize, initialPawnsPosition);
+        }
+
+        public void InitAll(IntPosition gridSize, IntPosition initialPawnsPosition)
+        {
             playerColorTurn = PlayerColor.White;
 
             InitPlayersData();
-            InitGameBoard(initialPawnRow, initialPawnColumn);
+            InitGameBoard(gridSize, initialPawnsPosition);
         }
 
         public void InitPlayersData()
         {
+            playerData = new PlayerData[NUMBER_OF_PLAYERS];
             playerData[(int)PlayerColor.Black] = new PlayerData(PlayerColor.Black);
             playerData[(int)PlayerColor.White] = new PlayerData(PlayerColor.White);
         }
 
-        public void InitGameBoard(int initialPawnRow, int initialPawnColumn)
+        public void InitGameBoard(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
+            gameBoard = new int[gridSize.Row, gridSize.Column];
+
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
@@ -47,10 +52,10 @@ namespace Othello.Data
                 }
             }
 
-            gameBoard[initialPawnRow, initialPawnColumn] = (int)SlotContent.White;
-            gameBoard[initialPawnRow + 1, initialPawnColumn] = (int)SlotContent.Black;
-            gameBoard[initialPawnRow, initialPawnColumn + 1] = (int)SlotContent.Black;
-            gameBoard[initialPawnRow + 1, initialPawnColumn + 1] = (int)SlotContent.White;
+            gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column] = (int)SlotContent.White;
+            gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column] = (int)SlotContent.Black;
+            gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column + 1] = (int)SlotContent.Black;
+            gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column + 1] = (int)SlotContent.White;
         }
 
         public PlayerData GetPlayerDataFromColor(PlayerColor color)
