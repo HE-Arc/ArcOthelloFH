@@ -41,7 +41,7 @@ namespace Othello.UI
                 {
                     SlotGrid slot = new SlotGrid(row, column);
                     slot.Click += OnClickEvent;
-                    slot.SetContent((EnumSlot)logic.GameBoard[row, column]);
+                    slot.SetContent((SlotContent)logic.GameBoard[row, column]);
 
                     this.Children.Add(slot);
                     Grid.SetRow(slot, row);
@@ -55,7 +55,7 @@ namespace Othello.UI
             SlotGrid slot = sender as SlotGrid;
             GridPos position = slot.GetPosition();
 
-            EnumSlot enumSlot = EnumSlot.White;
+            SlotContent enumSlot = SlotContent.White;
             slot.SetContent(enumSlot);
             logic.GameBoard[position.Row, position.Column] = (int)enumSlot;
             Console.WriteLine("Position: " + position.Row + ":" + position.Column);

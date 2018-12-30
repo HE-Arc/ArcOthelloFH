@@ -84,15 +84,15 @@ namespace Orthello.UI
         }
 
         // Todo: Modify the parameter with enum
-        public void SetContent(EnumSlot slot)
+        public void SetContent(SlotContent slot)
         {
-            if (slot == EnumSlot.White)
+            if (slot == SlotContent.White)
             {
                 Image img = new Image();
                 img.Source = WHITE_PAWN;
                 this.Content = img;
             }
-            else if (slot == EnumSlot.Black)
+            else if (slot == SlotContent.Black)
             {
                 Image img = new Image();
                 img.Source = BLACK_PAWN;
