@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Othello.Data
 {
-    enum EnumSlot { Empty, White, Black };
-    enum EnumPlayer { One = 0, Two = 1 };
+    enum SlotContent { Nothing = -1, White = 0, Black = 1 };
 
     class OthelloLogic
     {
@@ -26,21 +25,18 @@ namespace Othello.Data
 
         public void InitGameBoard(int initialPawnRow = 3, int initialPawnColumn = 3)
         {
-            int rows = gameBoard.GetLength(0);
-            int columns = gameBoard.GetLength(1);
-
-            for (int row = 0; row < rows; row++)
+            for (int row = 0; row < Rows; row++)
             {
-                for (int column = 0; column < columns; column++)
+                for (int column = 0; column < Columns; column++)
                 {
-                    gameBoard[row, column] = (int)EnumSlot.Empty;
+                    gameBoard[row, column] = (int)SlotContent.Nothing;
                 }
             }
 
-            gameBoard[initialPawnRow, initialPawnColumn] = (int)EnumSlot.White;
-            gameBoard[initialPawnRow + 1, initialPawnColumn] = (int)EnumSlot.Black;
-            gameBoard[initialPawnRow, initialPawnColumn + 1] = (int)EnumSlot.Black;
-            gameBoard[initialPawnRow + 1, initialPawnColumn + 1] = (int)EnumSlot.White;
+            gameBoard[initialPawnRow, initialPawnColumn] = (int)SlotContent.White;
+            gameBoard[initialPawnRow + 1, initialPawnColumn] = (int)SlotContent.Black;
+            gameBoard[initialPawnRow, initialPawnColumn + 1] = (int)SlotContent.Black;
+            gameBoard[initialPawnRow + 1, initialPawnColumn + 1] = (int)SlotContent.White;
         }
 
         public int Rows
