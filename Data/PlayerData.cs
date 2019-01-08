@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Othello.Data
 {
-    enum PlayerColor { White = 0, Black = 1 };
+    enum Player { White = 0, Black = 1 };
 
     class PlayerData
     {
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;
-        private PlayerColor color;
+        private Player color;
 
-        public PlayerData(PlayerColor color)
+        public PlayerData(Player color)
         {
             this.color = color;
         }
@@ -31,7 +31,7 @@ namespace Othello.Data
             set { secondsElapsed = value; } 
         }
 
-        public PlayerColor Color
+        public Player Color
         {
             get { return color ;}
         }

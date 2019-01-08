@@ -14,7 +14,7 @@ namespace Othello.Data
 
         private PlayerData[] playerData;
         private int[,] gameBoard;
-        private PlayerColor playerColorTurn;
+        private Player playerColorTurn;
 
         public OthelloLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
@@ -27,7 +27,7 @@ namespace Othello.Data
 
         public void InitAll(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
-            playerColorTurn = PlayerColor.White;
+            playerColorTurn = Player.White;
 
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
@@ -38,8 +38,8 @@ namespace Othello.Data
         public void InitPlayersData()
         {
             playerData = new PlayerData[NUMBER_OF_PLAYERS];
-            playerData[(int)PlayerColor.Black] = new PlayerData(PlayerColor.Black);
-            playerData[(int)PlayerColor.White] = new PlayerData(PlayerColor.White);
+            playerData[(int)Player.Black] = new PlayerData(Player.Black);
+            playerData[(int)Player.White] = new PlayerData(Player.White);
         }
 
         public void InitGameBoard(IntPosition gridSize, IntPosition initialPawnsPosition)
@@ -65,17 +65,17 @@ namespace Othello.Data
             return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
         }
 
-        public PlayerColor GetOppositePlayerColor(PlayerColor color)
+        public Player GetOppositePlayerColor(Player color)
         {
-            PlayerColor result;
+            Player result;
 
-            if(color == PlayerColor.White)
+            if(color == Player.White)
             {
-                result = PlayerColor.Black;
+                result = Player.Black;
             }
             else
             {
-                result = PlayerColor.White;
+                result = Player.White;
             }
 
             return result;
@@ -84,8 +84,8 @@ namespace Othello.Data
         public List<IntPosition> GetNeighborsDirections(IntPosition position)
         {
             List<IntPosition> directionsList = new List<IntPosition>();
-            PlayerColor currentPlayer = playerColorTurn;
-            PlayerColor oppositePlayer = GetOppositePlayerColor(currentPlayer);
+            Player currentPlayer = playerColorTurn;
+            Player oppositePlayer = GetOppositePlayerColor(currentPlayer);
             
             for(int rowDelta = -1; rowDelta <= 1; rowDelta++)
             {
@@ -106,29 +106,49 @@ namespace Othello.Data
             return directionsList;
         }
 
-        public void AnalyzeGameBoard()
+        public bool IsPossibleMove(IntPosition pawnPosition, IntPosition direction, List<IntPosition> positions)
         {
-            List<IntPosition> directionsList = GetNeighborsDirections(new IntPosition(3,3));
+            IntPosition currentPosition = pawnPosition;
+            bool result = false;
 
-            foreach(IntPosition direction in directionsList)
+            Player currentPlayer = playerColorTurn;
+            Player oppositePlayer = GetOppositePlayerColor(currentPlayer);
+
+            positions.Add(pawnPosition);
+
+            currentPosition += direction;
+            while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)oppositePlayer)
             {
-                Console.WriteLine(direction);
+                positions.Add(currentPosition);
+                currentPosition += direction;
             }
+            
+            if(result = (gameBoard[currentPosition.Row, currentPosition.Column] == (int)SlotContent.Nothing))
+            {
+                positions.Add(currentPosition);
+            }
+
+            return result;
         }
 
-        public PlayerData GetPlayerDataFromColor(PlayerColor color)
+        public void AnalyzeGameBoard()
+        {
+
+        }
+
+        public PlayerData GetPlayerDataFromColor(Player color)
         {
             return playerData[(int)color];
         }
 
         public PlayerData GetWhitePlayerData()
         {
-            return GetPlayerDataFromColor(PlayerColor.White);
+            return GetPlayerDataFromColor(Player.White);
         }
 
         public PlayerData GetBlackPlayerData()
         {
-            return GetPlayerDataFromColor(PlayerColor.Black);
+            return GetPlayerDataFromColor(Player.Black);
         }
 
         public int Rows

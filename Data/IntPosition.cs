@@ -28,6 +28,16 @@ namespace Othello.Data
             return builder.ToString();
         }
 
+        public static IntPosition operator+(IntPosition intA, IntPosition intB)
+        {
+            return new IntPosition(intA.Row + intB.Row, intA.Column + intB.Column);
+        }
+
+        public static IntPosition operator-(IntPosition intA, IntPosition intB)
+        {
+            return new IntPosition(intA.Row - intB.Row, intA.Column - intB.Column);
+        }
+
         public int Row
         {
             get { return this.row; }
