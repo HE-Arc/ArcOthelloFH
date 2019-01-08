@@ -12,9 +12,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel x:Name="MainDockPanel" Margin="10">
-            <local:PlayerUI DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left"/>
-            <local:PlayerUI DockPanel.Dock="Right" Height="Auto" Width="130" HorizontalAlignment="Right"/>
-            <local:GameControlsUI DockPanel.Dock="Bottom" Height="44" Width="Auto" Background="Black"/>
+            <local:PlayerUI x:Name="player_ui_left" DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left"/>
+            <local:PlayerUI x:Name="player_ui_right" DockPanel.Dock="Right" Height="Auto" Width="130" HorizontalAlignment="Right"/>
+            <local:GameControlsUI x:Name="game_controls_ui" DockPanel.Dock="Bottom" Height="44" Width="Auto" Background="Black"/>
         </DockPanel>
     </Grid>
 </UserControl>
