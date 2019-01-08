@@ -10,11 +10,13 @@ namespace Othello.UI
 {
     class OthelloGrid: Grid
     {
+        private Slot[,] slotsArray;
         private OthelloLogic logic;
 
         public OthelloGrid(OthelloLogic logic) : base()
         {
             this.logic = logic;
+            this.slotsArray = new Slot[logic.Rows, logic.Columns];
 
             this.PrepareGeometry();
         }
@@ -35,15 +37,17 @@ namespace Othello.UI
                 this.ColumnDefinitions.Add(columnDef);
             }
 
-            for(int row = 0;row < logic.Rows; row++)
+            for (int row = 0;row < logic.Rows; row++)
             {
                 for (int column = 0; column < logic.Columns; column++)
                 {
-                    SlotGrid slot = new SlotGrid(row, column);
+                    Slot slot = new Slot(row, column);
                     slot.Click += OnClickEvent;
                     slot.SetContent((SlotContent)logic.GameBoard[row, column]);
 
                     this.Children.Add(slot);
+                    slotsArray[row, column] = slot;
+
                     Grid.SetRow(slot, row);
                     Grid.SetColumn(slot, column);
                 }
@@ -52,13 +56,23 @@ namespace Othello.UI
 
         public void OnClickEvent(Object sender, RoutedEventArgs args)
         {
-            SlotGrid slot = sender as SlotGrid;
+            Slot slot = sender as Slot;
             IntPosition position = slot.GetPosition();
 
-            SlotContent enumSlot = SlotContent.White;
-            slot.SetContent(enumSlot);
-            logic.GameBoard[position.Row, position.Column] = (int)enumSlot;
+            SlotContent slotContent = SlotContent.White;
+            slot.SetContent(slotContent);
+            logic.GameBoard[position.Row, position.Column] = (int)slotContent;
             Console.WriteLine("Position: " + position.Row + ":" + position.Column);
+        }
+
+        public void MarkSlot(IntPosition slotPosition)
+        {
+            this.slotsArray[slotPosition.Row, slotPosition.Column].Mark();
+        }
+
+        public void UnMarkSlot(IntPosition slotPosition)
+        {
+            this.slotsArray[slotPosition.Row, slotPosition.Column].Unmark();
         }
     }
 }
