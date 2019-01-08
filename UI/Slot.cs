@@ -8,12 +8,12 @@ using System.Windows.Media.Imaging;
 
 namespace Orthello.UI
 {
-    class SlotGrid : Button
+    class Slot : Button
     {
         private static readonly BitmapImage BLACK_PAWN = null;
         private static readonly BitmapImage WHITE_PAWN = null;
 
-        static SlotGrid()
+        static Slot()
         {
             Uri blackPawnUri = new Uri("pack://application:,,,/Othello;component/Resources/Black_Pawn.png", UriKind.Absolute);
             Uri whitePawnUri = new Uri("pack://application:,,,/Othello;component/Resources/White_Pawn.png", UriKind.Absolute);
@@ -27,7 +27,7 @@ namespace Orthello.UI
         /// </summary>
         /// <param name="row">Row of the slot in the grid</param>
         /// <param name="column">Column of the slot in the grid</param>
-        public SlotGrid(int row, int column): base()
+        public Slot(int row, int column): base()
         {
             this.Style = this.FindResource("slotStyle") as Style;
             this.AttributeName(row, column);
@@ -76,6 +76,22 @@ namespace Orthello.UI
                 img.Source = BLACK_PAWN;
                 this.Content = img;
             }
+        }
+
+        /// <summary>
+        /// Mark the slot with red color
+        /// </summary>
+        public void Mark()
+        {
+            this.Background = Brushes.Red;
+        }
+
+        /// <summary>
+        /// Unmark the slot and reset the common color
+        /// </summary>
+        public void Unmark()
+        {
+            this.Background = Brushes.DarkGreen;
         }
     }
 }
