@@ -14,7 +14,7 @@ namespace Othello.Data
 
         private PlayerData[] playerData;
         private int[,] gameBoard;
-        private Player playerColorTurn;
+        private Player playerTurn;
 
         public OthelloLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
@@ -27,12 +27,10 @@ namespace Othello.Data
 
         public void InitAll(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
-            playerColorTurn = Player.White;
+            playerTurn = Player.White;
 
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
-
-            AnalyzeGameBoard();
         }
 
         public void InitPlayersData()
@@ -65,11 +63,11 @@ namespace Othello.Data
             return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
         }
 
-        public Player GetOppositePlayerColor(Player color)
+        public Player GetOppositePlayer(Player player)
         {
             Player result;
 
-            if(color == Player.White)
+            if(player == Player.White)
             {
                 result = Player.Black;
             }
@@ -84,8 +82,8 @@ namespace Othello.Data
         public List<IntPosition> GetNeighborsDirections(IntPosition position)
         {
             List<IntPosition> directionsList = new List<IntPosition>();
-            Player currentPlayer = playerColorTurn;
-            Player oppositePlayer = GetOppositePlayerColor(currentPlayer);
+            Player currentPlayer = playerTurn;
+            Player oppositePlayer = GetOppositePlayer(currentPlayer);
             
             for(int rowDelta = -1; rowDelta <= 1; rowDelta++)
             {
@@ -111,8 +109,8 @@ namespace Othello.Data
             IntPosition currentPosition = pawnPosition;
             bool result = false;
 
-            Player currentPlayer = playerColorTurn;
-            Player oppositePlayer = GetOppositePlayerColor(currentPlayer);
+            Player currentPlayer = playerTurn;
+            Player oppositePlayer = GetOppositePlayer(currentPlayer);
 
             positions.Add(pawnPosition);
 
@@ -131,24 +129,19 @@ namespace Othello.Data
             return result;
         }
 
-        public void AnalyzeGameBoard()
+        public PlayerData GetPlayerData(Player player)
         {
-
-        }
-
-        public PlayerData GetPlayerDataFromColor(Player color)
-        {
-            return playerData[(int)color];
+            return playerData[(int)player];
         }
 
         public PlayerData GetWhitePlayerData()
         {
-            return GetPlayerDataFromColor(Player.White);
+            return GetPlayerData(Player.White);
         }
 
         public PlayerData GetBlackPlayerData()
         {
-            return GetPlayerDataFromColor(Player.Black);
+            return GetPlayerData(Player.Black);
         }
 
         public int Rows
