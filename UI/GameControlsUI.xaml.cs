@@ -20,22 +20,39 @@ namespace Othello.UI
     /// </summary>
     public partial class GameControlsUI : UserControl
     {
-        private event EventHandler eventEndTurnPressed;
+        private event EventHandler eventEndTurnClicked;
+        private event EventHandler eventUndoClicked;
 
         public GameControlsUI()
         {
             InitializeComponent();
         }
 
-        public EventHandler EventEndTurnPressed
+        public EventHandler EventEndTurnClicked
         {
-            get { return this.eventEndTurnPressed; }
-            set { this.eventEndTurnPressed = value; }
+            get { return this.eventEndTurnClicked; }
+            set { this.eventEndTurnClicked = value; }
         }
 
-        private void lbl_end_turn_Click(object sender, RoutedEventArgs e)
+        public EventHandler EventUndoClicked
         {
-            EventHandler handler = eventEndTurnPressed;
+            get { return this.eventUndoClicked; }
+            set { this.eventUndoClicked = value; }
+        }
+
+        private void OnEndOfTurnClicked(object sender, RoutedEventArgs e)
+        {
+            EventHandler handler = eventEndTurnClicked;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        private void OnUndoClicked(object sender, RoutedEventArgs e)
+        {
+            EventHandler handler = eventUndoClicked;
 
             if (handler != null)
             {

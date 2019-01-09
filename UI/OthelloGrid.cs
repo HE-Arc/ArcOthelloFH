@@ -11,39 +11,38 @@ namespace Othello.UI
     class OthelloGrid: Grid
     {
         private Slot[,] slotsArray;
-        private OthelloLogic logic;
 
-        public OthelloGrid(OthelloLogic logic) : base()
+        private EventHandler eventSlotClicked;
+
+        public OthelloGrid(IntPosition size) : base()
         {
-            this.logic = logic;
-            this.slotsArray = new Slot[logic.Rows, logic.Columns];
+            this.slotsArray = new Slot[size.Row, size.Column];
 
-            this.PrepareGeometry();
+            this.PrepareGeometry(size);
         }
 
-        public void PrepareGeometry()
+        public void PrepareGeometry(IntPosition size)
         {
             StringBuilder builder = new StringBuilder();
 
-            for (int row = 0; row < logic.Rows; row++)
+            for (int row = 0; row < size.Row; row++)
             {
                 RowDefinition rowDef = new RowDefinition();
                 this.RowDefinitions.Add(rowDef);
             }
 
-            for (int column = 0; column < logic.Columns; column++)
+            for (int column = 0; column < size.Column; column++)
             {
                 ColumnDefinition columnDef = new ColumnDefinition();
                 this.ColumnDefinitions.Add(columnDef);
             }
 
-            for (int row = 0;row < logic.Rows; row++)
+            for (int row = 0;row < size.Row; row++)
             {
-                for (int column = 0; column < logic.Columns; column++)
+                for (int column = 0; column < size.Column; column++)
                 {
                     Slot slot = new Slot(row, column);
                     slot.Click += OnClickEvent;
-                    slot.SetContent((SlotContent)logic.GameBoard[row, column]);
 
                     this.Children.Add(slot);
                     slotsArray[row, column] = slot;
@@ -56,23 +55,23 @@ namespace Othello.UI
 
         public void OnClickEvent(Object sender, RoutedEventArgs args)
         {
-            Slot slot = sender as Slot;
-            IntPosition position = slot.GetPosition();
+            EventHandler handler = eventSlotClicked;
 
-            SlotContent slotContent = SlotContent.White;
-            slot.SetContent(slotContent);
-            logic.GameBoard[position.Row, position.Column] = (int)slotContent;
-            Console.WriteLine("Position: " + position.Row + ":" + position.Column);
+            if(handler != null)
+            {
+                handler(this, args);
+            }
         }
 
-        public void MarkSlot(IntPosition slotPosition)
+        public EventHandler EventSlotClicked
         {
-            this.slotsArray[slotPosition.Row, slotPosition.Column].Mark();
+            get { return this.eventSlotClicked; }
+            set { this.eventSlotClicked = value; }
         }
 
-        public void UnMarkSlot(IntPosition slotPosition)
+        public Slot[,] SlotsArray
         {
-            this.slotsArray[slotPosition.Row, slotPosition.Column].Unmark();
+            get { return SlotsArray; }
         }
     }
 }
