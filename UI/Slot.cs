@@ -12,6 +12,8 @@ namespace Orthello.UI
     {
         private static readonly BitmapImage BLACK_PAWN = null;
         private static readonly BitmapImage WHITE_PAWN = null;
+        private static readonly Brush MARK_COLOR;
+        private static readonly Brush UNMARK_COLOR;
 
         static Slot()
         {
@@ -20,6 +22,9 @@ namespace Orthello.UI
 
             BLACK_PAWN = new BitmapImage(blackPawnUri);
             WHITE_PAWN = new BitmapImage(whitePawnUri);
+
+            MARK_COLOR = Brushes.DarkRed;
+            UNMARK_COLOR = Brushes.DarkGreen;
         }
 
         /// <summary>
@@ -83,7 +88,7 @@ namespace Orthello.UI
         /// </summary>
         public void Mark()
         {
-            this.Background = Brushes.Red;
+            this.Background = MARK_COLOR;
         }
 
         /// <summary>
@@ -91,7 +96,7 @@ namespace Orthello.UI
         /// </summary>
         public void Unmark()
         {
-            this.Background = Brushes.DarkGreen;
+            this.Background = UNMARK_COLOR;
         }
     }
 }
