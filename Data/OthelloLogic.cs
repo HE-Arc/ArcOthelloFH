@@ -158,5 +158,10 @@ namespace Othello.Data
         {
             get { return gameBoard; }
         }
+
+        public Player PlayerTurn
+        {
+            get { return playerTurn; }
+        }
     }
 }

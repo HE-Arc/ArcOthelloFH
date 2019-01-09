@@ -59,7 +59,7 @@ namespace Othello.UI
 
             if(handler != null)
             {
-                handler(this, args);
+                handler(sender, args);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Othello.UI
 
         public Slot[,] SlotsArray
         {
-            get { return SlotsArray; }
+            get { return slotsArray; }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Othello.Data;
+﻿using Orthello.UI;
+using Othello.Data;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -27,6 +28,7 @@ namespace Othello.UI
 
             // Add the events
             game_controls_ui.EventEndTurnClicked += OnEndOfTurnClicked;
+            grid.EventSlotClicked += OnSlotClicked;
 
             //Init the game
             InitGame();
@@ -74,6 +76,18 @@ namespace Othello.UI
         public void OnEndOfTurnClicked(object sender, EventArgs e)
         {
 
+        }
+
+        public void OnSlotClicked(object sender, EventArgs e)
+        {
+            Slot slot = sender as Slot;
+            IntPosition position = slot.GetPosition();
+
+            if (grid.SlotsArray[position.Row, position.Column].IsMarked())
+            {
+                logic.GameBoard[position.Row, position.Column] = (int)logic.PlayerTurn;
+                grid.SlotsArray[position.Row, position.Column].SetContent((SlotContent)logic.PlayerTurn);
+            }
         }
     }
 }

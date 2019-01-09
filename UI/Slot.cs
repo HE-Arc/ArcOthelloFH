@@ -98,5 +98,14 @@ namespace Orthello.UI
         {
             this.Background = UNMARK_COLOR;
         }
+
+        /// <summary>
+        /// Check if the case is marked
+        /// </summary>
+        /// <returns>True if the slot is marked</returns>
+        public bool IsMarked()
+        {
+            return this.Background == MARK_COLOR;
+        }
     }
 }
