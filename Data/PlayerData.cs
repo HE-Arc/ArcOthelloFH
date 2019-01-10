@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Othello.Data
 {
@@ -13,10 +14,22 @@ namespace Othello.Data
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;
         private Player color;
+        private Stopwatch stopwatch;
 
         public PlayerData(Player color)
         {
             this.color = color;
+            this.stopwatch = new Stopwatch();
+        }
+
+        public void StartTimer()
+        {
+            this.stopwatch.Start();
+        }
+
+        public void StopTimer()
+        {
+            this.stopwatch.Stop();
         }
 
         public int NumberOfPawns
@@ -27,7 +40,7 @@ namespace Othello.Data
 
         public int SecondsElapsed
         {
-            get { return secondsElapsed ; }
+            get { return stopwatch.Elapsed.Seconds; }
             set { secondsElapsed = value; } 
         }
 

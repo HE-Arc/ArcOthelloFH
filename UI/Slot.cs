@@ -96,7 +96,11 @@ namespace Orthello.UI
         /// </summary>
         public void Unmark()
         {
-            this.Background = UNMARK_COLOR;
+            if(this.IsMarked())
+            {
+                this.Background = UNMARK_COLOR;
+            }
+            
         }
 
         /// <summary>

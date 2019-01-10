@@ -27,7 +27,7 @@ namespace Othello.Data
 
         public void InitAll(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
-            playerTurn = Player.White;
+            playerTurn = Player.Black;
 
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
@@ -90,18 +90,59 @@ namespace Othello.Data
                 for(int columnDelta = -1; columnDelta <= 1; columnDelta++)
                 {
                     IntPosition nextPosition = new IntPosition(position.Row + rowDelta, position.Column + columnDelta);
-                    int slotContentId = gameBoard[nextPosition.Row, nextPosition.Column];
 
-                    if ((position.Row != nextPosition.Row || position.Column != nextPosition.Column) &&
-                       slotContentId == (int)oppositePlayer && 
-                       IsPositionValid(nextPosition))
+                    if (IsPositionValid(nextPosition))
                     {
-                        directionsList.Add(new IntPosition(rowDelta, columnDelta));
+                        int slotContentId = gameBoard[nextPosition.Row, nextPosition.Column];
+
+                        if ((position.Row != nextPosition.Row || position.Column != nextPosition.Column) &&
+                           slotContentId == (int)oppositePlayer &&
+                           IsPositionValid(nextPosition))
+                        {
+                            directionsList.Add(new IntPosition(rowDelta, columnDelta));
+                        }
                     }
                 }
             }
 
             return directionsList;
+        }
+
+
+        /// <summary>
+        /// Walk the game board to get all possible moves for the current player.
+        /// </summary>
+        /// <returns>
+        /// A list containing the position of each playable slot. 
+        /// </returns>
+        public List<IntPosition> GetAllPossibleMoves()
+        {
+            List<IntPosition> possibleMovesList = new List<IntPosition>();
+            for(int rowIndex = 0; rowIndex < Rows; rowIndex++)
+            {
+                for(int columnIndex = 0; columnIndex < Columns; columnIndex++)
+                {
+                    IntPosition currentSlot = new IntPosition(rowIndex, columnIndex);
+                    int slotContentId = gameBoard[currentSlot.Row, currentSlot.Column];
+                    if(slotContentId == (int)playerTurn)
+                    {
+                        List<IntPosition> currentSlotPossibleMovesList = GetNeighborsDirections(currentSlot);
+                        List<IntPosition> movements = new List<IntPosition>();
+                        foreach (IntPosition direction in currentSlotPossibleMovesList)
+                        {
+                            if(IsPossibleMove(currentSlot, direction, movements))
+                            {
+                                IntPosition possibleMove = movements[movements.Count - 1];
+                                possibleMovesList.Add(possibleMove);
+                            }
+                            movements.Clear();
+                        }
+                        //possibleMovesList.AddRange(currentSlotPossibleMovesList);
+                    }
+                }
+            }
+
+            return possibleMovesList;
         }
 
         public bool IsPossibleMove(IntPosition pawnPosition, IntPosition direction, List<IntPosition> positions)
@@ -121,12 +162,69 @@ namespace Othello.Data
                 currentPosition += direction;
             }
             
-            if(result = (gameBoard[currentPosition.Row, currentPosition.Column] == (int)SlotContent.Nothing))
+            if(result = IsPositionValid(currentPosition) && (gameBoard[currentPosition.Row, currentPosition.Column] == (int)SlotContent.Nothing))
             {
                 positions.Add(currentPosition);
             }
 
             return result;
+        }
+
+        public List<IntPosition> GetPawnsToFlip(IntPosition pawnPosition)
+        {
+            List<IntPosition> pawnsToFlip = new List<IntPosition>();
+            List<IntPosition> directionsList = GetNeighborsDirections(pawnPosition);
+            foreach (IntPosition direction in directionsList)
+            {
+                List<IntPosition> currentPath = new List<IntPosition>();
+
+                Player currentPlayer = playerTurn;
+                Player oppositePlayer = GetOppositePlayer(currentPlayer);
+
+                IntPosition currentPosition = pawnPosition;
+                currentPosition += direction;
+                while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)oppositePlayer)
+                {
+                    currentPath.Add(currentPosition);
+                    currentPosition += direction;
+                }
+
+                if(IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)currentPlayer)
+                {
+                    pawnsToFlip.AddRange(currentPath);
+                }
+            }
+
+            return pawnsToFlip;
+        }
+
+        public void switchPlayer()
+        {
+            playerTurn = GetOppositePlayer(playerTurn);
+        }
+
+        public void ClearPlayersScore()
+        {
+            foreach(PlayerData player in playerData)
+            {
+                player.NumberOfPawns = 0;
+            }
+        }
+
+        public void UpdatePlayerScore()
+        {
+            ClearPlayersScore();
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int column = 0; column < Columns; column++)
+                {
+                    int slotValue = gameBoard[row, column];
+                    if(slotValue >= 0)
+                    {
+                        playerData[slotValue].NumberOfPawns += 1;
+                    }
+                }
+            }
         }
 
         public PlayerData GetPlayerData(Player player)

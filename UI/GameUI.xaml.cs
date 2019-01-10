@@ -22,6 +22,12 @@ namespace Othello.UI
             // Prepare data
             logic = new OthelloLogic();
 
+            DataContext = new
+            {
+                player1 = logic.GetWhitePlayerData(),
+                player2 = logic.GetBlackPlayerData()
+            };
+
             // Prepare the grid
             grid = new OthelloGrid(new IntPosition(logic.Rows, logic.Columns));
             MainDockPanel.Children.Add(grid);
@@ -51,17 +57,33 @@ namespace Othello.UI
             // Prepare the first turn for black pawns
         }
 
+        public void ClearBoardMarks()
+        {
+            for (int row = 0; row < logic.Rows; row++)
+            {
+                for (int column = 0; column < logic.Columns; column++)
+                {
+                    grid.SlotsArray[row, column].Unmark();
+                }
+            }
+        }
+
         public void PrepareNextTurn()
         {
-
+            ClearBoardMarks();
+            logic.UpdatePlayerScore();
+            logic.switchPlayer();
+            ExecuteBefore();
         }
 
         public void ExecuteBefore()
         {
             IntPosition currentPosition = new IntPosition(3, 3);
-            List<IntPosition> directionsList = logic.GetNeighborsDirections(currentPosition);
+            //List<IntPosition> directionsList = logic.GetNeighborsDirections(currentPosition);
+            List<IntPosition> directionsList = logic.GetAllPossibleMoves();
             List<IntPosition> movements = new List<IntPosition>();
 
+            /*
             foreach (IntPosition direction in directionsList)
             {
                 if (logic.IsPossibleMove(currentPosition, direction, movements))
@@ -71,11 +93,21 @@ namespace Othello.UI
                 }
                 movements.Clear();
             }
+            */
+            foreach (IntPosition possibleMove in directionsList)
+            {
+                grid.SlotsArray[possibleMove.Row, possibleMove.Column].Mark();
+            }
+
+            if(directionsList.Count == 0)
+            {
+                PrepareNextTurn();
+            }
         }
 
         public void OnEndOfTurnClicked(object sender, EventArgs e)
         {
-
+            
         }
 
         public void OnSlotClicked(object sender, EventArgs e)
@@ -87,6 +119,15 @@ namespace Othello.UI
             {
                 logic.GameBoard[position.Row, position.Column] = (int)logic.PlayerTurn;
                 grid.SlotsArray[position.Row, position.Column].SetContent((SlotContent)logic.PlayerTurn);
+
+                List<IntPosition> pawnsToFlip = logic.GetPawnsToFlip(position);
+                foreach (IntPosition pawnPosition in pawnsToFlip)
+                {
+                    logic.GameBoard[pawnPosition.Row, pawnPosition.Column] = (int)logic.PlayerTurn;
+                    grid.SlotsArray[pawnPosition.Row, pawnPosition.Column].SetContent((SlotContent)logic.PlayerTurn);
+                }
+
+                PrepareNextTurn();
             }
         }
     }
