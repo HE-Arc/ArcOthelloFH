@@ -19,14 +19,11 @@ namespace Othello.UI
         {
             InitializeComponent();
 
-            // Prepare data
+            // Prepare datas
             logic = new OthelloBoardLogic();
 
-            DataContext = new
-            {
-                player1 = logic.GetWhitePlayerData(),
-                player2 = logic.GetBlackPlayerData()
-            };
+            this.player_ui_left.DataContext = logic.GetWhitePlayerData();
+            this.player_ui_right.DataContext = logic.GetBlackPlayerData();
 
             // Prepare the grid
             grid = new OthelloGrid(new IntPosition(logic.Rows, logic.Columns));
@@ -72,7 +69,7 @@ namespace Othello.UI
         {
             ClearBoardMarks();
             logic.UpdatePlayerScore();
-            logic.switchPlayer();
+            logic.SwitchPlayer();
             ExecuteBefore();
         }
 
