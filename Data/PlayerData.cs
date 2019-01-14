@@ -14,25 +14,11 @@ namespace Othello.Data
     {
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;
-        private Player color;
-        private Stopwatch stopwatch;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PlayerData(Player color)
+        public PlayerData()
         {
-            this.color = color;
-            this.stopwatch = new Stopwatch();
-        }
-
-        public void StartTimer()
-        {
-            this.stopwatch.Start();
-        }
-
-        public void StopTimer()
-        {
-            this.stopwatch.Stop();
         }
 
         public void ClearScore()
@@ -50,23 +36,22 @@ namespace Othello.Data
             }
         }
 
+        public int SecondsElapsed
+        {
+            get { return this.secondsElapsed; }
+            set
+            {
+                secondsElapsed = value;
+                RaisePropertyChanged("SecondsElapsed");
+            }
+        }
+
         public void RaisePropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        public int SecondsElapsed
-        {
-            get { return stopwatch.Elapsed.Seconds; }
-            set { secondsElapsed = value; } 
-        }
-
-        public Player Color
-        {
-            get { return color ;}
         }
     }
 }

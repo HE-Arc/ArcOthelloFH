@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Othello.UI"
              mc:Ignorable="d" Height="288.068" Width="165.341">
     <Grid Background="Black">
-        <Label x:Name="lbl_player" Content="{Binding NumberOfPawns}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label Content="Time :" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Foreground="White" />
+        <Label x:Name="lbl_score" Content="{Binding NumberOfPawns}" HorizontalAlignment="Left" Margin="84,61,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="lbl_time" Content="{Binding SecondsElapsed}" HorizontalAlignment="Left" Margin="84,30,0,0" VerticalAlignment="Top" Foreground="White" />
+        <Label x:Name="lbl_txt_score" Content="Score" HorizontalAlignment="Left" Margin="17,61,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8"/>
+        <Label x:Name="lbl_txt_time" Content="Time" HorizontalAlignment="Left" Margin="17,30,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8"/>
     </Grid>
 </UserControl>

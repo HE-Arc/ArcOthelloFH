@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Othello.Data
 {
@@ -15,6 +16,7 @@ namespace Othello.Data
         private PlayerData[] playerData;
         private int[,] gameBoard;
         private Player playerTurn;
+        private Timer timer;
 
         public OthelloBoardLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
@@ -31,13 +33,14 @@ namespace Othello.Data
 
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
+            InitTimer();
         }
 
         public void InitPlayersData()
         {
             playerData = new PlayerData[NUMBER_OF_PLAYERS];
-            playerData[(int)Player.Black] = new PlayerData(Player.Black);
-            playerData[(int)Player.White] = new PlayerData(Player.White);
+            playerData[(int)Player.Black] = new PlayerData();
+            playerData[(int)Player.White] = new PlayerData();
         }
 
         public void InitGameBoard(IntPosition gridSize, IntPosition initialPawnsPosition)
@@ -56,6 +59,20 @@ namespace Othello.Data
             gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column] = (int)SlotContent.Black;
             gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column + 1] = (int)SlotContent.Black;
             gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column + 1] = (int)SlotContent.White;
+        }
+
+        public void InitTimer()
+        {
+            this.timer = new Timer(1000);
+            this.timer.Elapsed += OnTimedEvent;
+            this.timer.Enabled = true;
+            this.timer.Start();
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            PlayerData playerData = this.GetPlayerData(playerTurn);
+            playerData.SecondsElapsed++;
         }
 
         public bool IsPositionValid(IntPosition position)
