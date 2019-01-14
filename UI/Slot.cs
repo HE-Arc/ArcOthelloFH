@@ -24,7 +24,7 @@ namespace Orthello.UI
             WHITE_PAWN = new BitmapImage(whitePawnUri);
 
             MARK_COLOR = Brushes.DarkRed;
-            UNMARK_COLOR = Brushes.DarkGreen;
+            UNMARK_COLOR = Brushes.Green;
         }
 
         /// <summary>
