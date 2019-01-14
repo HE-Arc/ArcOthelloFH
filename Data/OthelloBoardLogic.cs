@@ -8,7 +8,7 @@ namespace Othello.Data
 {
     enum SlotContent { Nothing = -1, White = 0, Black = 1 };
 
-    class OthelloLogic
+    class OthelloBoardLogic
     {
         private readonly int NUMBER_OF_PLAYERS = 2;
 
@@ -16,11 +16,11 @@ namespace Othello.Data
         private int[,] gameBoard;
         private Player playerTurn;
 
-        public OthelloLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
+        public OthelloBoardLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
         }
 
-        public OthelloLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
+        public OthelloBoardLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
             InitAll(gridSize, initialPawnsPosition);
         }

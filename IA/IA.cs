@@ -12,9 +12,9 @@ namespace Othello.IA
     /// </summary>
     class IA : IPlayable.IPlayable
     {
-        private OthelloLogic logic;
+        private OthelloBoardLogic logic;
 
-        public IA(OthelloLogic logic)
+        public IA(OthelloBoardLogic logic)
         {
             this.logic = logic;
         }

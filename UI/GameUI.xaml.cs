@@ -12,7 +12,7 @@ namespace Othello.UI
     /// </summary>
     public partial class GameUI : UserControl
     {
-        private OthelloLogic logic;
+        private OthelloBoardLogic logic;
         private OthelloGrid grid;
 
         public GameUI()
@@ -20,7 +20,7 @@ namespace Othello.UI
             InitializeComponent();
 
             // Prepare data
-            logic = new OthelloLogic();
+            logic = new OthelloBoardLogic();
 
             DataContext = new
             {
