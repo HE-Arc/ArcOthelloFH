@@ -198,7 +198,7 @@ namespace Othello.Data
             return pawnsToFlip;
         }
 
-        public void switchPlayer()
+        public void SwitchPlayer()
         {
             playerTurn = GetOppositePlayer(playerTurn);
         }
@@ -207,31 +207,45 @@ namespace Othello.Data
         {
             foreach(PlayerData player in playerData)
             {
-                player.NumberOfPawns = 0;
+                player.ClearScore();
             }
         }
 
+        /// <summary>
+        /// Updates the score of the current player
+        /// </summary>
         public void UpdatePlayerScore()
         {
             ClearPlayersScore();
+
+            int totalPawns = 0;
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    int slotValue = gameBoard[row, column];
-                    if(slotValue >= 0)
+                    if(gameBoard[row, column] == (int) playerTurn)
                     {
-                        playerData[slotValue].NumberOfPawns += 1;
+                        totalPawns++;
                     }
                 }
             }
+            playerData[(int)playerTurn].NumberOfPawns = totalPawns;
         }
 
+        /// <summary>
+        /// Get data of player
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>Data of the player</returns>
         public PlayerData GetPlayerData(Player player)
         {
             return playerData[(int)player];
         }
 
+        /// <summary>
+        /// Get data of the white player
+        /// </summary>
+        /// <returns>Data of the white player</returns>
         public PlayerData GetWhitePlayerData()
         {
             return GetPlayerData(Player.White);
