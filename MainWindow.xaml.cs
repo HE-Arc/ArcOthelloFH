@@ -28,20 +28,32 @@ namespace Orthello
         {
             InitializeComponent();
 
-            LaunchMainMenu();
+            grid_main.Children.Add(menuUi);
         }
 
         public void LaunchMainMenu()
         {
-            grid_main.Children.Clear();
+            int elementToRemove = grid_main.Children.Count - 1;
+
+            grid_main.Children.RemoveAt(elementToRemove);
             grid_main.Children.Add(menuUi);
+
+            Grid.SetRow(menuUi, 1);
+            Grid.SetColumn(menuUi, 0);
         }
 
         public void LaunchShowGame(OthelloBoardLogic logic = null)
         {
             GameUI gameUi = new GameUI(logic);
-            grid_main.Children.Clear();
+            int elementToRemove = grid_main.Children.Count - 1;
+
+            grid_main.Children.RemoveAt(elementToRemove);
             grid_main.Children.Add(gameUi);
+            gameUi.HorizontalAlignment = HorizontalAlignment.Stretch;
+            gameUi.VerticalAlignment = VerticalAlignment.Stretch;
+
+            Grid.SetRow(gameUi, 1);
+            Grid.SetColumn(gameUi, 0);
         }
     }
 }

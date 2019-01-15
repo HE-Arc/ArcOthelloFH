@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:Orthello"
         xmlns:ui="clr-namespace:Othello.UI"
         mc:Ignorable="d"
-        Title="Othello ARC" Height="478.125" Width="814.061">
+        Title="Othello ARC" Height="600" Width="800" MinWidth="800" MinHeight="600">
     <Grid x:Name="grid_main">
+        <Menu x:Name="menu_main" Height="29" VerticalAlignment="Top">
+            <MenuItem x:Name="item_file" Header="File" Height="28" Width="35">
+                <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="140"/>
+                <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="140"/>
+                <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
