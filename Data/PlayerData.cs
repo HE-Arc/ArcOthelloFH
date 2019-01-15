@@ -16,6 +16,7 @@ namespace Othello.Data
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;
 
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public PlayerData()

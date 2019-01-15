@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace Othello.Data
 {
-    enum SlotContent { Nothing = -1, White = 0, Black = 1 };
+    public enum SlotContent { Nothing = -1, White = 0, Black = 1 };
 
     [Serializable]
     public class OthelloBoardLogic
@@ -17,6 +17,8 @@ namespace Othello.Data
         private PlayerData[] playerData;
         private int[,] gameBoard;
         private Player playerTurn;
+
+        [NonSerialized]
         private Timer timer;
 
         public OthelloBoardLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
