@@ -62,6 +62,7 @@ namespace Othello.UI
             if (dialog.ShowDialog() == true)
             {
                 dataSave = (OthelloBoardLogic)Tools.DeserializeFromFile(dialog.FileName);
+                dataSave.InitTimer();
                 mainWindow.LaunchShowGame(dataSave);
             }
         }
