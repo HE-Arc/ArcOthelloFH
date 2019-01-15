@@ -19,15 +19,24 @@ namespace Othello.Data
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PlayerData()
         {
         }
 
+        /// <summary>
+        /// Clear the score the pawn. Prefer this method for clearing score. This way, you avoid the binding update.
+        /// </summary>
         public void ClearScore()
         {
             this.numberOfPawns = 0;
         }
 
+        /// <summary>
+        /// Get or set the number of pawns. When set, the value is updated with the graphical interface
+        /// </summary>
         public int NumberOfPawns
         {
             get { return numberOfPawns; }
@@ -38,6 +47,9 @@ namespace Othello.Data
             }
         }
 
+        /// <summary>
+        /// Get and set seconds elapsed. When set, the value is updated with the graphical interface
+        /// </summary>
         public int SecondsElapsed
         {
             get { return this.secondsElapsed; }
@@ -48,6 +60,10 @@ namespace Othello.Data
             }
         }
 
+        /// <summary>
+        /// Inform that a property changed. Used for binding.
+        /// </summary>
+        /// <param name="propertyName">Property which has changed</param>
         public void RaisePropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)

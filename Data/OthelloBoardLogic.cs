@@ -21,15 +21,29 @@ namespace Othello.Data
         [NonSerialized]
         private Timer timer;
 
+        /// <summary>
+        /// Default constructor : Construct othello game board and all his logic. The size of the game is 7x9
+        /// </summary>
         public OthelloBoardLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
         {
         }
 
+        /// <summary>
+        /// Overloaded constructor: can define the size of the board and the initial position of the pawns (top left corner)
+        /// </summary>
+        /// <param name="gridSize">Size of the board</param>
+        /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
         public OthelloBoardLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
             InitAll(gridSize, initialPawnsPosition);
         }
 
+
+        /// <summary>
+        /// Initialise all the data of the game
+        /// </summary>
+        /// <param name="gridSize">Size of the board</param>
+        /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
         public void InitAll(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
             playerTurn = Player.Black;
@@ -39,6 +53,9 @@ namespace Othello.Data
             InitTimer();
         }
 
+        /// <summary>
+        /// Init. of the players
+        /// </summary>
         public void InitPlayersData()
         {
             playerData = new PlayerData[NUMBER_OF_PLAYERS];
@@ -46,6 +63,11 @@ namespace Othello.Data
             playerData[(int)Player.White] = new PlayerData();
         }
 
+        /// <summary>
+        /// Init. the game board
+        /// </summary>
+        /// <param name="gridSize">Size of the board</param>
+        /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
         public void InitGameBoard(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
             gameBoard = new int[gridSize.Row, gridSize.Column];
@@ -64,6 +86,9 @@ namespace Othello.Data
             gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column + 1] = (int)SlotContent.White;
         }
 
+        /// <summary>
+        /// Init. timer: increment player time every second
+        /// </summary>
         public void InitTimer()
         {
             this.timer = new Timer(1000);
@@ -72,17 +97,32 @@ namespace Othello.Data
             this.timer.Start();
         }
 
+        /// <summary>
+        /// Update time of the current player
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             PlayerData playerData = this.GetPlayerData(playerTurn);
             playerData.SecondsElapsed++;
         }
 
+        /// <summary>
+        /// Check if the position is inside the board
+        /// </summary>
+        /// <param name="position">Position to check</param>
+        /// <returns>True if the position is inside board, false otherwise</returns>
         public bool IsPositionValid(IntPosition position)
         {
             return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
         }
 
+        /// <summary>
+        /// Get the opposite player information
+        /// </summary>
+        /// <param name="player">Current</param>
+        /// <returns></returns>
         public Player GetOppositePlayer(Player player)
         {
             Player result;
@@ -98,7 +138,12 @@ namespace Othello.Data
 
             return result;
         }
-
+        
+        /// <summary>
+        /// Get directions where there's a playable move
+        /// </summary>
+        /// <param name="position">Position to check</param>
+        /// <returns>List of directions</returns>
         public List<IntPosition> GetNeighborsDirections(IntPosition position)
         {
             List<IntPosition> directionsList = new List<IntPosition>();
@@ -165,6 +210,13 @@ namespace Othello.Data
             return possibleMovesList;
         }
 
+        /// <summary>
+        /// Check if there's a valid move in the given direction, if true, the "positions" list is filled with all the positions of the valid move
+        /// </summary>
+        /// <param name="pawnPosition">Position to check</param>
+        /// <param name="direction">Direction to check</param>
+        /// <param name="positions">Empty list given by the user, filled with severals position if there's a valid move</param>
+        /// <returns></returns>
         public bool IsPossibleMove(IntPosition pawnPosition, IntPosition direction, List<IntPosition> positions)
         {
             IntPosition currentPosition = pawnPosition;
@@ -190,6 +242,11 @@ namespace Othello.Data
             return result;
         }
 
+        /// <summary>
+        /// Get list of positions which indicate the pawns to flip 
+        /// </summary>
+        /// <param name="pawnPosition">Pawn position</param>
+        /// <returns>List of positions where to flip pawns</returns>
         public List<IntPosition> GetPawnsToFlip(IntPosition pawnPosition)
         {
             List<IntPosition> pawnsToFlip = new List<IntPosition>();
@@ -218,11 +275,17 @@ namespace Othello.Data
             return pawnsToFlip;
         }
 
+        /// <summary>
+        /// Switch player turn
+        /// </summary>
         public void SwitchPlayer()
         {
             playerTurn = GetOppositePlayer(playerTurn);
         }
 
+        /// <summary>
+        /// Clears the score of all players
+        /// </summary>
         public void ClearPlayersScore()
         {
             foreach(PlayerData player in playerData)
@@ -279,26 +342,42 @@ namespace Othello.Data
             return GetPlayerData(Player.White);
         }
 
+        /// <summary>
+        /// Get data of the black player
+        /// </summary>
+        /// <returns>Data of the black player</returns>
         public PlayerData GetBlackPlayerData()
         {
             return GetPlayerData(Player.Black);
         }
 
+        /// <summary>
+        /// Get the number of rows
+        /// </summary>
         public int Rows
         {
             get { return gameBoard.GetLength(0); }
         }
 
+        /// <summary>
+        ///  Get the number of columns
+        /// </summary>
         public int Columns
         {
             get { return gameBoard.GetLength(1); }
         }
 
+        /// <summary>
+        /// Get the board
+        /// </summary>
         public int[,] GameBoard
         {
             get { return gameBoard; }
         }
 
+        /// <summary>
+        /// Get the current player turn
+        /// </summary>
         public Player PlayerTurn
         {
             get { return playerTurn; }
