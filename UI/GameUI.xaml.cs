@@ -15,12 +15,20 @@ namespace Othello.UI
         private OthelloBoardLogic logic;
         private OthelloGrid grid;
 
-        public GameUI()
+        public GameUI(OthelloBoardLogic logic = null)
         {
             InitializeComponent();
 
             // Prepare datas
-            logic = new OthelloBoardLogic();
+            if(this.logic == null)
+            {
+                this.logic = new OthelloBoardLogic();
+            }
+            else
+            {
+                this.logic = logic;
+            }
+            
 
             this.player_ui_left.DataContext = logic.GetWhitePlayerData();
             this.player_ui_right.DataContext = logic.GetBlackPlayerData();

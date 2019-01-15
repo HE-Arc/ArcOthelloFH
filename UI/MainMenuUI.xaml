@@ -12,7 +12,7 @@
 
             <Button x:Name="btn_pvp" Content="Player vs Player" Margin="0,5" Click="btn_pvp_Click"/>
             <Button x:Name="btn_pvia" Content="Player vs IA" Margin="0,5" Click="btn_pvia_Click" IsEnabled="False"/>
-            <Button x:Name="btn_load" Content="Load" Margin="0,5"/>
+            <Button x:Name="btn_load" Content="Load" Margin="0,5" Click="btn_load_Click"/>
             <Button x:Name="btn_options" Content="Options" Margin="0,5"/>
             <Button x:Name="btn_quit" Content="Quit" Margin="0,5" Click="btn_quit_Click"/>
         </StackPanel>

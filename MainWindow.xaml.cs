@@ -1,4 +1,5 @@
-﻿using Othello.UI;
+﻿using Othello.Data;
+using Othello.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,6 @@ namespace Orthello
     public partial class MainWindow : Window
     {
         private MainMenuUI menuUi = new MainMenuUI();
-        private GameUI gameUi = new GameUI();
 
         public MainWindow()
         {
@@ -37,8 +37,9 @@ namespace Orthello
             grid_main.Children.Add(menuUi);
         }
 
-        public void LaunchShowGame()
+        public void LaunchShowGame(OthelloBoardLogic logic = null)
         {
+            GameUI gameUi = new GameUI(logic);
             grid_main.Children.Clear();
             grid_main.Children.Add(gameUi);
         }

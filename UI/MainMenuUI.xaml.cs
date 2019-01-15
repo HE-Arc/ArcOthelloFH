@@ -1,4 +1,6 @@
-﻿using Orthello;
+﻿using Microsoft.Win32;
+using Orthello;
+using Othello.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,14 @@ namespace Othello.UI
         public MainMenuUI()
         {
             InitializeComponent();
+
+            PlayerData data = new PlayerData();
+            data.NumberOfPawns = 55;
+
+            Tools.SerializeToFile("testfile", data);
+            PlayerData data2 = (PlayerData)Tools.DeserializeFromFile("testfile");
+
+            Console.WriteLine(data2.NumberOfPawns);
         }
 
         private void btn_pvp_Click(object sender, RoutedEventArgs e)
@@ -41,6 +51,19 @@ namespace Othello.UI
         private void btn_quit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void btn_load_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            OpenFileDialog dialog = new OpenFileDialog();
+            OthelloBoardLogic dataSave = null;
+
+            if (dialog.ShowDialog() == true)
+            {
+                dataSave = (OthelloBoardLogic)Tools.DeserializeFromFile(dialog.FileName);
+                mainWindow.LaunchShowGame(dataSave);
+            }
         }
     }
 }
