@@ -232,24 +232,32 @@ namespace Othello.Data
         }
 
         /// <summary>
-        /// Updates the score of the current player
+        /// Updates the score of the players
         /// </summary>
-        public void UpdatePlayerScore()
+        public void UpdatePlayersScore()
         {
             ClearPlayersScore();
 
-            int totalPawns = 0;
+            Player oppositePlayer = GetOppositePlayer(playerTurn);
+            int totalPawnsCurrentPlayer = 0;
+            int totalPawnsOppositePlayer = 0;
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
                 {
                     if(gameBoard[row, column] == (int) playerTurn)
                     {
-                        totalPawns++;
+                        totalPawnsCurrentPlayer++;
+                    }
+                    else if(gameBoard[row, column] == (int) oppositePlayer)
+                    {
+                        totalPawnsOppositePlayer++;
                     }
                 }
             }
-            playerData[(int)playerTurn].NumberOfPawns = totalPawns;
+
+            playerData[(int)playerTurn].NumberOfPawns = totalPawnsCurrentPlayer;
+            playerData[(int)oppositePlayer].NumberOfPawns = totalPawnsOppositePlayer;
         }
 
         /// <summary>

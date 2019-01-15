@@ -20,7 +20,7 @@ namespace Othello.UI
         {
             InitializeComponent();
 
-            // Prepare datas
+            // Prepare data
             if(logic == null)
             {
                 this.logic = new OthelloBoardLogic();
@@ -29,8 +29,8 @@ namespace Othello.UI
             {
                 this.logic = logic;
             }
-            
 
+            // Define data context for each panel of the players
             this.player_ui_left.DataContext = this.logic.GetWhitePlayerData();
             this.player_ui_right.DataContext = this.logic.GetBlackPlayerData();
 
@@ -78,7 +78,7 @@ namespace Othello.UI
         public void PrepareNextTurn()
         {
             ClearBoardMarks();
-            logic.UpdatePlayerScore();
+            logic.UpdatePlayersScore();
             logic.SwitchPlayer();
             ExecuteBefore();
         }
