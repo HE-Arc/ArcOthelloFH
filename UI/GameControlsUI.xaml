@@ -9,7 +9,7 @@
         <StackPanel Margin="10,10,0,10" Orientation="Horizontal" HorizontalAlignment="Center" Width="300" VerticalAlignment="Center">
             <Button x:Name="lbl_end_turn" Content="End turn" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OnEndOfTurnClicked"/>
             <Button x:Name="lbl_undo" Content="Undo" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OnUndoClicked"/>
-            <Button x:Name="lbl_save_game" Content="Save this game" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button x:Name="lbl_save_game" Content="Save this game" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OnSaveClicked"/>
         </StackPanel>
 
     </Grid>
