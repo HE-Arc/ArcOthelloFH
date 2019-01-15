@@ -22,6 +22,7 @@ namespace Othello.UI
     {
         private event EventHandler eventEndTurnClicked;
         private event EventHandler eventUndoClicked;
+        private event EventHandler eventSaveClicked;
 
         public GameControlsUI()
         {
@@ -40,6 +41,12 @@ namespace Othello.UI
             set { this.eventUndoClicked = value; }
         }
 
+        public EventHandler EventSaveClicked
+        {
+            get { return this.eventSaveClicked; }
+            set { this.eventSaveClicked = value; }
+        }
+
         private void OnEndOfTurnClicked(object sender, RoutedEventArgs e)
         {
             EventHandler handler = eventEndTurnClicked;
@@ -55,6 +62,16 @@ namespace Othello.UI
             EventHandler handler = eventUndoClicked;
 
             if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        private void OnSaveClicked(object sender, RoutedEventArgs e)
+        {
+            EventHandler handler = eventSaveClicked;
+
+            if(handler != null)
             {
                 handler(this, e);
             }
