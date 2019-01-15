@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Othello.Data
 {
-    struct IntPosition
+    public struct IntPosition
     {
         private int row;
         private int column;

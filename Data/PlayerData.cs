@@ -8,9 +8,10 @@ using System.ComponentModel;
 
 namespace Othello.Data
 {
-    enum Player { White = 0, Black = 1 };
+    public enum Player { White = 0, Black = 1 };
 
-    class PlayerData : INotifyPropertyChanged
+    [Serializable]
+    public class PlayerData : INotifyPropertyChanged
     {
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;

@@ -9,7 +9,8 @@ namespace Othello.Data
 {
     enum SlotContent { Nothing = -1, White = 0, Black = 1 };
 
-    class OthelloBoardLogic
+    [Serializable]
+    public class OthelloBoardLogic
     {
         private readonly int NUMBER_OF_PLAYERS = 2;
 
