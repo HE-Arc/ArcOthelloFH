@@ -63,6 +63,7 @@
     <Compile Include="Data\IntPosition.cs" />
     <Compile Include="Data\OthelloBoardLogic.cs" />
     <Compile Include="Data\PlayerData.cs" />
+    <Compile Include="Data\Tools.cs" />
     <Compile Include="IA\IA.cs" />
     <Compile Include="UI\GameControlsUI.xaml.cs">
       <DependentUpon>GameControlsUI.xaml</DependentUpon>
