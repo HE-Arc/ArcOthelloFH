@@ -1,7 +1,7 @@
-﻿<Application x:Class="Orthello.App"
+﻿<Application x:Class="Othello.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Orthello"
+             xmlns:local="clr-namespace:Othello"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Style for slot -->

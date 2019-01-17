@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Orthello.UI
+namespace Othello.UI
 {
     class Slot : Button
     {

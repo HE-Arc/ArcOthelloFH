@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Orthello;
+using Othello;
 using Othello.Data;
 using System;
 using System.Collections.Generic;
@@ -36,21 +36,34 @@ namespace Othello.UI
             Console.WriteLine(data2.NumberOfPawns);
         }
 
+        private void OnLoadClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.LoadSaveGame();
+        }
+
+        private void OnQuitClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Quit();
+        }
+
         private void btn_pvp_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.LaunchShowGame();
+            mainWindow.LaunchShowGame(new OthelloBoardLogic());
         }
 
         private void btn_pvia_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.LaunchShowGame();
+            mainWindow.LaunchShowGame(new OthelloBoardLogic());
         }
 
         private void btn_quit_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Quit();
         }
 
         private void btn_load_Click(object sender, RoutedEventArgs e)

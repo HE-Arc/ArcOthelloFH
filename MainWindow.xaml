@@ -1,19 +1,12 @@
-﻿<Window x:Name="win_main" x:Class="Orthello.MainWindow"
+﻿<Window x:Name="win_main" x:Class="Othello.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Orthello"
+        xmlns:local="clr-namespace:Othello"
         xmlns:ui="clr-namespace:Othello.UI"
         mc:Ignorable="d"
         Title="Othello ARC" Height="600" Width="800" MinWidth="800" MinHeight="600">
     <Grid x:Name="grid_main">
-        <Menu x:Name="menu_main" Height="29" VerticalAlignment="Top">
-            <MenuItem x:Name="item_file" Header="File" Height="28" Width="35">
-                <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="140"/>
-                <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="140"/>
-                <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140"/>
-            </MenuItem>
-        </Menu>
     </Grid>
 </Window>

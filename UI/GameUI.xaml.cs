@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
-using Orthello.UI;
+using Othello;
+using Othello.UI;
 using Othello.Data;
 using System;
 using System.Collections.Generic;
@@ -38,12 +39,10 @@ namespace Othello.UI
             grid = new OthelloGrid(new IntPosition(this.logic.Rows, this.logic.Columns));
             MainDockPanel.Children.Add(grid);
 
-            // Add the events
-            game_controls_ui.EventEndTurnClicked += OnEndOfTurnClicked;
-            game_controls_ui.EventSaveClicked += OnSaveClicked;
+            // Events
             grid.EventSlotClicked += OnSlotClicked;
 
-            //Init the game
+            // Init the game
             InitGame();
 
             // Execute 
@@ -138,14 +137,22 @@ namespace Othello.UI
             }
         }
 
-        public void OnSaveClicked(object sender, EventArgs e)
+        private void OnLoadClicked(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.LoadSaveGame();
+        }
 
-            if(dialog.ShowDialog() == true)
-            {
-                Tools.SerializeToFile(dialog.FileName, logic);
-            }
+        private void item_save_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.SaveGame(logic);
+        }
+
+        private void item_quit_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Quit();
         }
     }
 }

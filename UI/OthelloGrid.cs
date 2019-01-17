@@ -1,4 +1,4 @@
-﻿using Orthello.UI;
+﻿using Othello.UI;
 using Othello.Data;
 using System;
 using System.Text;
