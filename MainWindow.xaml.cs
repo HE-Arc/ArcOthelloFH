@@ -38,6 +38,7 @@ namespace Othello
         public void LoadSaveGame()
         {
             OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "othello save files (*.oth)|*.oth";
             OthelloBoardLogic dataSave = null;
 
             if (dialog.ShowDialog() == true)
@@ -51,6 +52,7 @@ namespace Othello
         public void SaveGame(OthelloBoardLogic logic)
         {
             SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "othello save files (*.oth)|*.oth";
 
             if (dialog.ShowDialog() == true)
             {

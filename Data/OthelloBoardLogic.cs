@@ -17,6 +17,7 @@ namespace Othello.Data
         private PlayerData[] playerData;
         private int[,] gameBoard;
         private Player playerTurn;
+        private List<Tuple<List<IntPosition>, Player>> moveHistory;
 
         [NonSerialized]
         private Timer timer;
@@ -51,6 +52,7 @@ namespace Othello.Data
             InitPlayersData();
             InitGameBoard(gridSize, initialPawnsPosition);
             InitTimer();
+            moveHistory = new List<Tuple<List<IntPosition>, Player>>();
         }
 
         /// <summary>
@@ -106,6 +108,46 @@ namespace Othello.Data
         {
             PlayerData playerData = this.GetPlayerData(playerTurn);
             playerData.SecondsElapsed++;
+        }
+
+        /// <summary>
+        /// Updates game data by filling each of the given slots with the current player color.
+        /// This move is then stored as a tuple containing the list of affected slots and which player is responsible for it
+        /// </summary>
+        /// <param name="slotsToUpdate"> The list of slots that need to be changed</param>
+        public void UpdateSlots(List<IntPosition> slotsToUpdate)
+        {
+            foreach (var slotPosition in slotsToUpdate)
+            {
+                GameBoard[slotPosition.Row, slotPosition.Column] = (int)PlayerTurn;
+            }
+            var move = Tuple.Create(slotsToUpdate, PlayerTurn);
+            moveHistory.Add(move);
+        }
+
+
+        /// <summary>
+        /// Gets the most recent move stored and plays it backwards.
+        /// </summary>
+        /// <returns> 
+        /// A tuple containing the coordinates of the affected slots, which 
+        /// player the move belongs to and the coordinates of the pawn that 
+        /// was added to the board (which now has to be removed).
+        /// </returns>
+        public Tuple<List<IntPosition>, Player, IntPosition> UndoMove()
+        {
+            var lastMove = moveHistory.Last();
+            List<IntPosition> slotsToUndo = lastMove.Item1;
+            Player moveAuthor = lastMove.Item2;
+            IntPosition lastPawnPosition = slotsToUndo.Last();
+            slotsToUndo.RemoveAt(slotsToUndo.Count - 1);
+            foreach (var position in slotsToUndo)
+            {
+                GameBoard[position.Row, position.Column] = (int)GetOppositePlayer(moveAuthor);
+            }
+            GameBoard[lastPawnPosition.Row, lastPawnPosition.Column] = (int)SlotContent.Nothing;
+            moveHistory.RemoveAt(moveHistory.Count - 1);
+            return Tuple.Create(slotsToUndo, moveAuthor, lastPawnPosition);
         }
 
         /// <summary>
@@ -202,11 +244,9 @@ namespace Othello.Data
                             }
                             movements.Clear();
                         }
-                        //possibleMovesList.AddRange(currentSlotPossibleMovesList);
                     }
                 }
             }
-
             return possibleMovesList;
         }
 

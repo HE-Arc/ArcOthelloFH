@@ -81,6 +81,10 @@ namespace Othello.UI
                 img.Source = BLACK_PAWN;
                 this.Content = img;
             }
+            else if (slot == SlotContent.Nothing)
+            {
+                this.Content = null;
+            }
         }
 
         /// <summary>

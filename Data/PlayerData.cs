@@ -15,6 +15,7 @@ namespace Othello.Data
     {
         private int numberOfPawns = 0;
         private int secondsElapsed = 0;
+        private bool hasSkippedLastTurn = false;
 
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
@@ -70,6 +71,15 @@ namespace Othello.Data
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        /// <summary>
+        /// Whether this player has skipped his turn.
+        /// </summary>
+        public bool HasSkippedLastTurn
+        {
+            get { return hasSkippedLastTurn;  }
+            set { hasSkippedLastTurn = value; }
         }
     }
 }

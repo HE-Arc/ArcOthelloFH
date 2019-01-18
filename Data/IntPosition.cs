@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Othello.Data
 {
+    [Serializable]
     public struct IntPosition
     {
         private int row;
