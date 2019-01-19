@@ -130,8 +130,29 @@ namespace Othello.UI
         /// </summary>
         public void EndGame()
         {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            PlayerData whitePlayerData = logic.GetWhitePlayerData();
+            PlayerData blackPlayerData = logic.GetBlackPlayerData();
+            String message;
+
             ClearBoardMarks();
             logic.UpdatePlayersScore();
+
+            if(whitePlayerData.NumberOfPawns > blackPlayerData.NumberOfPawns)
+            {
+                message = "White player won";
+            }
+            else if(whitePlayerData.NumberOfPawns < blackPlayerData.NumberOfPawns)
+            {
+                message = "Black player won";
+            }
+            else
+            {
+                message = "Ex aequo";
+            }
+
+            MessageBox.Show(message, "Game is over");
+            mainWindow.LaunchMainMenu();
         }
 
         public void OnEndOfTurnClicked(object sender, EventArgs e)
