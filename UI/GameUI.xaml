@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Othello.UI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="300*"/>
@@ -17,6 +18,10 @@
                     <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="140" Click="OnLoadClicked"/>
                     <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="140" Click="item_save_Click"/>
                     <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140" Click="item_quit_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
+                    <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Click="OnUndoClicked"/>
+                    <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Click="OnEndOfTurnClicked"/>
                 </MenuItem>
             </Menu>
             <local:PlayerUI x:Name="player_ui_left" DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left" DataContext="{Binding player1}"/>
