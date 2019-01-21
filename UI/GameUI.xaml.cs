@@ -14,18 +14,18 @@ namespace Othello.UI
     /// </summary>
     public partial class GameUI : UserControl
     {
-        private OthelloBoardLogic logic;
+        private OthelloLogic logic;
         private OthelloGrid grid;
         private bool hasPlayed = false;
 
-        public GameUI(OthelloBoardLogic logic = null)
+        public GameUI(OthelloLogic logic = null)
         {
             InitializeComponent();
 
             // Prepare data
             if (logic == null)
             {
-                this.logic = new OthelloBoardLogic();
+                this.logic = new OthelloLogic();
             }
             else
             {
@@ -37,7 +37,7 @@ namespace Othello.UI
             this.player_ui_right.DataContext = this.logic.GetBlackPlayerData();
 
             // Prepare the grid
-            grid = new OthelloGrid(new IntPosition(this.logic.Rows, this.logic.Columns));
+            grid = new OthelloGrid(new IntPosition(this.logic.Columns, this.logic.Rows));
             MainDockPanel.Children.Add(grid);
 
             // Events
@@ -59,12 +59,16 @@ namespace Othello.UI
             {
                 for (int column = 0; column < logic.Columns; column++)
                 {
-                    grid.SlotsArray[row, column].SetContent((SlotContent)logic.GameBoard[row, column]);
+                    grid.SlotsArray[column, row].SetContent((SlotContent)logic.GameBoard[column, row]);
                 }
             }
 
             // Prepare the first turn for black pawns
         }
+
+
+
+        
 
         /// <summary>
         /// Clears the board from any possible move mark (red background)
@@ -75,7 +79,7 @@ namespace Othello.UI
             {
                 for (int column = 0; column < logic.Columns; column++)
                 {
-                    grid.SlotsArray[row, column].Unmark();
+                    grid.SlotsArray[column, row].Unmark();
                 }
             }
         }
@@ -88,29 +92,15 @@ namespace Othello.UI
         }
 
         /// <summary>
-        /// Mark any possible move on the board for the current player and 
-        /// check if the player has to skip his turn
+        /// Check if there is any playable slot and skip or end game if there is none
         /// </summary>
         public void ExecuteBefore()
         {
-            IntPosition currentPosition = new IntPosition(3, 3);
             List<IntPosition> directionsList = logic.GetAllPossibleMoves();
-            List<IntPosition> movements = new List<IntPosition>();
-            PlayerData currentPlayerData = logic.GetPlayerData(logic.PlayerTurn);
-
-            foreach (IntPosition possibleMove in directionsList)
+            if(directionsList.Count == 0)
             {
-                grid.SlotsArray[possibleMove.Row, possibleMove.Column].Mark();
-            }
-
-            //skip turn if there's no move available
-            if (directionsList.Count == 0)
-            {
-                PlayerData oppositePlayerData = logic.GetPlayerData(logic.GetOppositePlayer(logic.PlayerTurn));
-                currentPlayerData.HasSkippedLastTurn = true;
-                if (currentPlayerData.HasSkippedLastTurn == oppositePlayerData.HasSkippedLastTurn)
+                if (logic.IsGameFinished)
                 {
-                    //nobody can perform a move anymore, game ends
                     EndGame();
                 }
                 else
@@ -120,7 +110,10 @@ namespace Othello.UI
             }
             else
             {
-                currentPlayerData.HasSkippedLastTurn = false;
+                foreach (IntPosition possibleMove in directionsList)
+                {
+                    grid.SlotsArray[possibleMove.Column, possibleMove.Row].Mark();
+                }
             }
         }
 
@@ -150,14 +143,14 @@ namespace Othello.UI
         /// <param name="slotPosition"> the coordinates of the selected grid slot</param>
         public void PlayMove(IntPosition slotPosition)
         {
-            if (grid.SlotsArray[slotPosition.Row, slotPosition.Column].IsMarked())
+            if (grid.SlotsArray[slotPosition.Column, slotPosition.Row].IsMarked())
             {
                 List<IntPosition> pawnsToFlip = logic.GetPawnsToFlip(slotPosition);
                 pawnsToFlip.Add(slotPosition);
 
                 foreach (IntPosition pawnPosition in pawnsToFlip)
                 {
-                    grid.SlotsArray[pawnPosition.Row, pawnPosition.Column].SetContent((SlotContent)logic.PlayerTurn);
+                    grid.SlotsArray[pawnPosition.Column, pawnPosition.Row].SetContent((SlotContent)logic.PlayerTurn);
                 }
 
                 logic.UpdateSlots(pawnsToFlip);
@@ -176,10 +169,10 @@ namespace Othello.UI
             Player moveAuthor = lastMove.Item2;
             IntPosition pawnToRemove = lastMove.Item3;
 
-            grid.SlotsArray[pawnToRemove.Row, pawnToRemove.Column].SetContent(SlotContent.Nothing);
+            grid.SlotsArray[pawnToRemove.Column, pawnToRemove.Row].SetContent(SlotContent.Nothing);
             foreach (var pawnPosition in pawnsToFlip)
             {
-                grid.SlotsArray[pawnPosition.Row, pawnPosition.Column].SetContent((SlotContent)logic.GetOppositePlayer(moveAuthor));
+                grid.SlotsArray[pawnPosition.Column, pawnPosition.Row].SetContent((SlotContent)logic.GetOppositePlayer(moveAuthor));
             }
 
             PrepareNextTurn();

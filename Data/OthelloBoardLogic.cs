@@ -10,7 +10,7 @@ namespace Othello.Data
     public enum SlotContent { Nothing = -1, White = 0, Black = 1 };
 
     [Serializable]
-    public class OthelloBoardLogic
+    public class OthelloLogic
     {
         private readonly int NUMBER_OF_PLAYERS = 2;
 
@@ -18,14 +18,17 @@ namespace Othello.Data
         private int[,] gameBoard;
         private Player playerTurn;
         private List<Tuple<List<IntPosition>, Player>> moveHistory;
+        private List<IntPosition> currentPlayableSlots;
+        private bool isGameFinished = false;
+        private PlayerData currentPlayerData;
 
         [NonSerialized]
         private Timer timer;
 
         /// <summary>
-        /// Default constructor : Construct othello game board and all his logic. The size of the game is 7x9
+        /// Default constructor : Construct othello game board and all his logic. The size of the game is 9x7
         /// </summary>
-        public OthelloBoardLogic(): this(new IntPosition(7,9), new IntPosition(3,3))
+        public OthelloLogic(): this(new IntPosition(9,7), new IntPosition(3,3))
         {
         }
 
@@ -34,14 +37,14 @@ namespace Othello.Data
         /// </summary>
         /// <param name="gridSize">Size of the board</param>
         /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
-        public OthelloBoardLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
+        public OthelloLogic(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
             InitAll(gridSize, initialPawnsPosition);
         }
 
 
         /// <summary>
-        /// Initialise all the data of the game
+        /// Initialize all the data of the game
         /// </summary>
         /// <param name="gridSize">Size of the board</param>
         /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
@@ -72,20 +75,20 @@ namespace Othello.Data
         /// <param name="initialPawnsPosition">Initial position of the pawns (top left corner)</param>
         public void InitGameBoard(IntPosition gridSize, IntPosition initialPawnsPosition)
         {
-            gameBoard = new int[gridSize.Row, gridSize.Column];
+            gameBoard = new int[gridSize.Column, gridSize.Row];
 
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    gameBoard[row, column] = (int)SlotContent.Nothing;
+                    gameBoard[column, row] = (int)SlotContent.Nothing;
                 }
             }
 
-            gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column] = (int)SlotContent.White;
-            gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column] = (int)SlotContent.Black;
-            gameBoard[initialPawnsPosition.Row, initialPawnsPosition.Column + 1] = (int)SlotContent.Black;
-            gameBoard[initialPawnsPosition.Row + 1, initialPawnsPosition.Column + 1] = (int)SlotContent.White;
+            gameBoard[initialPawnsPosition.Column, initialPawnsPosition.Row] = (int)SlotContent.White;
+            gameBoard[initialPawnsPosition.Column + 1, initialPawnsPosition.Row] = (int)SlotContent.Black;
+            gameBoard[initialPawnsPosition.Column, initialPawnsPosition.Row + 1] = (int)SlotContent.Black;
+            gameBoard[initialPawnsPosition.Column + 1, initialPawnsPosition.Row + 1] = (int)SlotContent.White;
         }
 
         /// <summary>
@@ -119,7 +122,7 @@ namespace Othello.Data
         {
             foreach (var slotPosition in slotsToUpdate)
             {
-                GameBoard[slotPosition.Row, slotPosition.Column] = (int)PlayerTurn;
+                GameBoard[slotPosition.Column, slotPosition.Row] = (int)PlayerTurn;
             }
             var move = Tuple.Create(slotsToUpdate, PlayerTurn);
             moveHistory.Add(move);
@@ -143,9 +146,9 @@ namespace Othello.Data
             slotsToUndo.RemoveAt(slotsToUndo.Count - 1);
             foreach (var position in slotsToUndo)
             {
-                GameBoard[position.Row, position.Column] = (int)GetOppositePlayer(moveAuthor);
+                GameBoard[position.Column, position.Row] = (int)GetOppositePlayer(moveAuthor);
             }
-            GameBoard[lastPawnPosition.Row, lastPawnPosition.Column] = (int)SlotContent.Nothing;
+            GameBoard[lastPawnPosition.Column, lastPawnPosition.Row] = (int)SlotContent.Nothing;
             moveHistory.RemoveAt(moveHistory.Count - 1);
             return Tuple.Create(slotsToUndo, moveAuthor, lastPawnPosition);
         }
@@ -196,17 +199,17 @@ namespace Othello.Data
             {
                 for(int columnDelta = -1; columnDelta <= 1; columnDelta++)
                 {
-                    IntPosition nextPosition = new IntPosition(position.Row + rowDelta, position.Column + columnDelta);
+                    IntPosition nextPosition = new IntPosition(position.Column + columnDelta, position.Row + rowDelta);
 
                     if (IsPositionValid(nextPosition))
                     {
-                        int slotContentId = gameBoard[nextPosition.Row, nextPosition.Column];
+                        int slotContentId = gameBoard[nextPosition.Column, nextPosition.Row];
 
                         if ((position.Row != nextPosition.Row || position.Column != nextPosition.Column) &&
                            slotContentId == (int)oppositePlayer &&
                            IsPositionValid(nextPosition))
                         {
-                            directionsList.Add(new IntPosition(rowDelta, columnDelta));
+                            directionsList.Add(new IntPosition(columnDelta, rowDelta));
                         }
                     }
                 }
@@ -229,8 +232,8 @@ namespace Othello.Data
             {
                 for(int columnIndex = 0; columnIndex < Columns; columnIndex++)
                 {
-                    IntPosition currentSlot = new IntPosition(rowIndex, columnIndex);
-                    int slotContentId = gameBoard[currentSlot.Row, currentSlot.Column];
+                    IntPosition currentSlot = new IntPosition(columnIndex, rowIndex);
+                    int slotContentId = gameBoard[currentSlot.Column, currentSlot.Row];
                     if(slotContentId == (int)playerTurn)
                     {
                         List<IntPosition> currentSlotPossibleMovesList = GetNeighborsDirections(currentSlot);
@@ -247,7 +250,31 @@ namespace Othello.Data
                     }
                 }
             }
+
+            if(possibleMovesList.Count == 0)
+            {
+                //SKIP TURN
+                SkipCurrentPlayerTurn();
+
+            }
+            else
+            {
+                CurrentPlayerData.HasSkippedLastTurn = false;
+            }
+
             return possibleMovesList;
+        }
+
+        private void SkipCurrentPlayerTurn()
+        {
+            PlayerData oppositePlayerData = GetPlayerData(GetOppositePlayer(playerTurn));
+
+            CurrentPlayerData.HasSkippedLastTurn = true;
+            if(CurrentPlayerData.HasSkippedLastTurn && oppositePlayerData.HasSkippedLastTurn)
+            {
+                //END GAME
+                isGameFinished = true;
+            }
         }
 
         /// <summary>
@@ -268,13 +295,13 @@ namespace Othello.Data
             positions.Add(pawnPosition);
 
             currentPosition += direction;
-            while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)oppositePlayer)
+            while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Column, currentPosition.Row] == (int)oppositePlayer)
             {
                 positions.Add(currentPosition);
                 currentPosition += direction;
             }
             
-            if(result = IsPositionValid(currentPosition) && (gameBoard[currentPosition.Row, currentPosition.Column] == (int)SlotContent.Nothing))
+            if(result = IsPositionValid(currentPosition) && (gameBoard[currentPosition.Column, currentPosition.Row] == (int)SlotContent.Nothing))
             {
                 positions.Add(currentPosition);
             }
@@ -300,13 +327,13 @@ namespace Othello.Data
 
                 IntPosition currentPosition = pawnPosition;
                 currentPosition += direction;
-                while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)oppositePlayer)
+                while (IsPositionValid(currentPosition) && gameBoard[currentPosition.Column, currentPosition.Row] == (int)oppositePlayer)
                 {
                     currentPath.Add(currentPosition);
                     currentPosition += direction;
                 }
 
-                if(IsPositionValid(currentPosition) && gameBoard[currentPosition.Row, currentPosition.Column] == (int)currentPlayer)
+                if(IsPositionValid(currentPosition) && gameBoard[currentPosition.Column, currentPosition.Row] == (int)currentPlayer)
                 {
                     pawnsToFlip.AddRange(currentPath);
                 }
@@ -348,11 +375,11 @@ namespace Othello.Data
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    if(gameBoard[row, column] == (int) playerTurn)
+                    if(gameBoard[column, row] == (int) playerTurn)
                     {
                         totalPawnsCurrentPlayer++;
                     }
-                    else if(gameBoard[row, column] == (int) oppositePlayer)
+                    else if(gameBoard[column, row] == (int) oppositePlayer)
                     {
                         totalPawnsOppositePlayer++;
                     }
@@ -391,12 +418,18 @@ namespace Othello.Data
             return GetPlayerData(Player.Black);
         }
 
+
+        public PlayerData CurrentPlayerData
+        {
+            get { return GetPlayerData(playerTurn); }
+        }
+
         /// <summary>
         /// Get the number of rows
         /// </summary>
         public int Rows
         {
-            get { return gameBoard.GetLength(0); }
+            get { return gameBoard.GetLength(1); }
         }
 
         /// <summary>
@@ -404,7 +437,7 @@ namespace Othello.Data
         /// </summary>
         public int Columns
         {
-            get { return gameBoard.GetLength(1); }
+            get { return gameBoard.GetLength(0); }
         }
 
         /// <summary>
@@ -413,6 +446,7 @@ namespace Othello.Data
         public int[,] GameBoard
         {
             get { return gameBoard; }
+            set { gameBoard = value; }
         }
 
         /// <summary>
@@ -421,6 +455,12 @@ namespace Othello.Data
         public Player PlayerTurn
         {
             get { return playerTurn; }
+            set { playerTurn = value; }
+        }
+
+        public bool IsGameFinished
+        {
+            get { return isGameFinished; }
         }
     }
 }

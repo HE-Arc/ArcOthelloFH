@@ -7,51 +7,69 @@ using System.Threading.Tasks;
 
 namespace Othello.IA
 {
-    /// <summary>
-    /// WTF ?
-    /// </summary>
-    class IA : IPlayable.IPlayable
+    class AIBoard : OthelloLogic, IPlayable.IPlayable
     {
-        private OthelloBoardLogic logic;
-
-        public IA(OthelloBoardLogic logic)
-        {
-            this.logic = logic;
-        }
-
         public int GetBlackScore()
         {
-            throw new NotImplementedException();
+            UpdatePlayersScore();
+            return GetBlackPlayerData().NumberOfPawns;
         }
 
         public int[,] GetBoard()
         {
-            throw new NotImplementedException();
+            return GameBoard;
         }
 
         public string GetName()
         {
-            throw new NotImplementedException();
+            return "ArcOthelloFH";
         }
 
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn)
         {
-            throw new NotImplementedException();
+            OthelloLogic logic = new OthelloLogic
+            {
+                GameBoard = game,
+                PlayerTurn = whiteTurn ? Player.White : Player.Black
+            };
+            List<IntPosition> possibleMoves = logic.GetAllPossibleMoves();
+            if(possibleMoves.Count == 0)
+            {
+                return new Tuple<int, int>(-1, -1);
+            }
+            Random rnd = new Random();
+            IntPosition move = possibleMoves[rnd.Next(0, possibleMoves.Count)];
+            return new Tuple<int, int>(move.Column, move.Row);
         }
 
         public int GetWhiteScore()
         {
-            throw new NotImplementedException();
+            UpdatePlayersScore();
+            return GetWhitePlayerData().NumberOfPawns;
         }
 
         public bool IsPlayable(int column, int line, bool isWhite)
         {
-            throw new NotImplementedException();
+            Player currentPlayer = PlayerTurn;
+            PlayerTurn = isWhite ? Player.White : Player.Black;
+            IntPosition positionToCheck = new IntPosition(column, line);
+            List<IntPosition> playableSlots = GetAllPossibleMoves();
+            PlayerTurn = currentPlayer;
+            return playableSlots.Contains(positionToCheck);
         }
 
         public bool PlayMove(int column, int line, bool isWhite)
         {
-            throw new NotImplementedException();
+            PlayerTurn = isWhite ? Player.White : Player.Black;
+            bool IsMoveValid = IsPlayable(column, line, isWhite);
+            if(IsMoveValid)
+            {
+                IntPosition slotPosition = new IntPosition(column, line);
+                List<IntPosition> pawnsToFlip = GetPawnsToFlip(slotPosition);
+                pawnsToFlip.Add(slotPosition);
+                UpdateSlots(pawnsToFlip);
+            }
+            return IsMoveValid;
         }
     }
 }

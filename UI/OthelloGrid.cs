@@ -16,7 +16,7 @@ namespace Othello.UI
 
         public OthelloGrid(IntPosition size) : base()
         {
-            this.slotsArray = new Slot[size.Row, size.Column];
+            this.slotsArray = new Slot[size.Column, size.Row];
 
             this.PrepareGeometry(size);
         }
@@ -41,11 +41,11 @@ namespace Othello.UI
             {
                 for (int column = 0; column < size.Column; column++)
                 {
-                    Slot slot = new Slot(row, column);
+                    Slot slot = new Slot(column, row);
                     slot.Click += OnClickEvent;
 
                     this.Children.Add(slot);
-                    slotsArray[row, column] = slot;
+                    slotsArray[column, row] = slot;
 
                     Grid.SetRow(slot, row);
                     Grid.SetColumn(slot, column);

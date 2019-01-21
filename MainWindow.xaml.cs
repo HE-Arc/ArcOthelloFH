@@ -27,7 +27,7 @@ namespace Othello
             grid_main.Children.Add(menuUi);
         }
 
-        public void LaunchShowGame(OthelloBoardLogic logic = null)
+        public void LaunchShowGame(OthelloLogic logic = null)
         {
             gameUi = new GameUI(logic);
 
@@ -39,17 +39,17 @@ namespace Othello
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "othello save files (*.oth)|*.oth";
-            OthelloBoardLogic dataSave = null;
+            OthelloLogic dataSave = null;
 
             if (dialog.ShowDialog() == true)
             {
-                dataSave = (OthelloBoardLogic)Tools.DeserializeFromFile(dialog.FileName);
+                dataSave = (OthelloLogic)Tools.DeserializeFromFile(dialog.FileName);
                 dataSave.InitTimer();
                 this.LaunchShowGame(dataSave);
             }
         }
 
-        public void SaveGame(OthelloBoardLogic logic)
+        public void SaveGame(OthelloLogic logic)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "othello save files (*.oth)|*.oth";
