@@ -310,7 +310,9 @@ namespace Othello.Data
         }
 
         /// <summary>
-        /// Get list of positions which indicate the pawns to flip 
+        /// Get a list of positions where a pawn has to be flipped, given the position where a new pawn is to be placed.
+        /// This is basically the effect of a new move on the board.
+        /// NB: the list does not contain the new pawn.
         /// </summary>
         /// <param name="pawnPosition">Pawn position</param>
         /// <returns>List of positions where to flip pawns</returns>
@@ -457,6 +459,7 @@ namespace Othello.Data
             get { return playerTurn; }
             set { playerTurn = value; }
         }
+
 
         public bool IsGameFinished
         {
