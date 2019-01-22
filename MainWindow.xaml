@@ -7,6 +7,7 @@
         xmlns:ui="clr-namespace:Othello.UI"
         mc:Ignorable="d"
         Title="Othello ARC" Height="600" Width="800" MinWidth="800" MinHeight="600">
+
     <Grid x:Name="grid_main">
     </Grid>
 </Window>

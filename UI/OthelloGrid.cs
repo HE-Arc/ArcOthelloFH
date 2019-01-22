@@ -25,6 +25,9 @@ namespace Othello.UI
         {
             StringBuilder builder = new StringBuilder();
 
+            this.HorizontalAlignment = HorizontalAlignment.Stretch;
+            this.VerticalAlignment = VerticalAlignment.Stretch;
+
             for (int row = 0; row < size.Row; row++)
             {
                 RowDefinition rowDef = new RowDefinition();
@@ -42,6 +45,10 @@ namespace Othello.UI
                 for (int column = 0; column < size.Column; column++)
                 {
                     Slot slot = new Slot(column, row);
+                    slot.MinHeight = 10;
+                    slot.MinWidth = 10;
+                    slot.Height = 40;
+                    slot.Width = 40;
                     slot.Click += OnClickEvent;
 
                     this.Children.Add(slot);

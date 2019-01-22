@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Othello.UI
 {
@@ -33,23 +34,27 @@ namespace Othello.UI
             }
 
             // Define data context for each panel of the players
-            this.player_ui_left.DataContext = this.logic.GetWhitePlayerData();
-            this.player_ui_right.DataContext = this.logic.GetBlackPlayerData();
+            this.player_ui_top.DataContext = this.logic.GetBlackPlayerData();
+            this.player_ui_bot.DataContext = this.logic.GetWhitePlayerData();
 
             // Prepare the grid
             grid = new OthelloGrid(new IntPosition(this.logic.Columns, this.logic.Rows));
-            MainDockPanel.Children.Add(grid);
+                        Viewbox box = new Viewbox();
+            box.Child = grid;
+            box.Stretch = System.Windows.Media.Stretch.Uniform;
+            main_dock_panel.Children.Add(box);
 
             // Events
             grid.EventSlotClicked += OnSlotClicked;
-            this.game_controls_ui.EventUndoClicked += OnUndoClicked;
-            this.game_controls_ui.EventEndTurnClicked += OnEndOfTurnClicked;
+            //this.game_controls_ui.EventUndoClicked += OnUndoClicked;
+            //this.game_controls_ui.EventEndTurnClicked += OnEndOfTurnClicked;
 
             // Init the game
             InitGame();
 
             // Execute 
             ExecuteBefore();
+            ShowCurrentPlayerTurn();
         }
 
         public void InitGame()
@@ -64,6 +69,9 @@ namespace Othello.UI
             }
 
             // Prepare the first turn for black pawns
+            // Update background for players
+            this.player_ui_top.ChangeStyle(Player.Black);
+            this.player_ui_bot.ChangeStyle(Player.White);
         }
 
 
@@ -84,7 +92,26 @@ namespace Othello.UI
             }
         }
 
+        /// <summary>
+        /// Display the player who is playing
+        /// </summary>
+        public void ShowCurrentPlayerTurn()
+        {
+            if(logic.PlayerTurn == Player.White)
+            {
+                player_ui_top.Opacity = 0.2;
+                player_ui_bot.Opacity = 1.0;
+            }
+            else if(logic.PlayerTurn == Player.Black)
+            {
+                player_ui_top.Opacity = 1.0;
+                player_ui_bot.Opacity = 0.2;
+            }
+        }
 
+        /// <summary>
+        /// Prepare all the stuff for the next turn
+        /// </summary>
         public void PrepareNextTurn()
         {
             ClearBoardMarks();
@@ -122,8 +149,29 @@ namespace Othello.UI
         /// </summary>
         public void EndGame()
         {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            PlayerData whitePlayerData = logic.GetWhitePlayerData();
+            PlayerData blackPlayerData = logic.GetBlackPlayerData();
+            String message;
+
             ClearBoardMarks();
             logic.UpdatePlayersScore();
+
+            if(whitePlayerData.NumberOfPawns > blackPlayerData.NumberOfPawns)
+            {
+                message = "White player won";
+            }
+            else if(whitePlayerData.NumberOfPawns < blackPlayerData.NumberOfPawns)
+            {
+                message = "Black player won";
+            }
+            else
+            {
+                message = "Ex aequo";
+            }
+
+            MessageBox.Show(message, "Game is over");
+            mainWindow.LaunchMainMenu();
         }
 
         public void OnEndOfTurnClicked(object sender, EventArgs e)
@@ -133,6 +181,7 @@ namespace Othello.UI
                 hasPlayed = false;
                 logic.SwitchPlayer();
                 ExecuteBefore();
+                ShowCurrentPlayerTurn();
             }
         }
 

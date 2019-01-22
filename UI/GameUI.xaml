@@ -5,23 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Othello.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="321.867" d:DesignWidth="434.933" Foreground="{x:Null}">
+
+    <Grid x:Name="grid_gameui" Margin="0,0,0.2,-0.4">
         <Grid.RowDefinitions>
             <RowDefinition Height="300*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DockPanel x:Name="MainDockPanel" Margin="10">
+        <DockPanel x:Name="main_dock_panel" Margin="0,0,0,0.6" Grid.RowSpan="2">
+            <DockPanel.Background>
+                <ImageBrush ImageSource="/Othello;component/Resources/Background.jpg" Stretch="UniformToFill"/>
+            </DockPanel.Background>
             <Menu x:Name="menu_game" DockPanel.Dock="Top" Height="29" VerticalAlignment="Top">
                 <MenuItem x:Name="item_file" Header="File" Height="28" Width="35">
                     <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="140" Click="OnLoadClicked"/>
                     <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="140" Click="item_save_Click"/>
                     <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140" Click="item_quit_Click"/>
                 </MenuItem>
+                <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
+                    <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Click="OnUndoClicked"/>
+                    <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Click="OnEndOfTurnClicked"/>
+                </MenuItem>
             </Menu>
-            <local:PlayerUI x:Name="player_ui_left" DockPanel.Dock="Left" Height="Auto" Width="130" HorizontalAlignment="Left" DataContext="{Binding player1}"/>
-            <local:PlayerUI x:Name="player_ui_right" DockPanel.Dock="Right" Height="Auto" Width="130" HorizontalAlignment="Right" DataContext="{Binding player2}"/>
-            <local:GameControlsUI x:Name="game_controls_ui" DockPanel.Dock="Bottom" Height="44" Width="Auto" Background="Black"/>
+            <Grid x:Name="grid_players" Margin="0,0.2,0,-0.2" Background="Black" MinWidth="148" Width="148">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <local:PlayerUI x:Name="player_ui_top" Height="Auto" Width="Auto" DataContext="{Binding player1}" Foreground="{x:Null}" Background="Black" Margin="0"/>
+                <local:PlayerUI x:Name="player_ui_bot" Height="Auto" Width="Auto" DataContext="{Binding player2}" Background="White" Margin="0,0.4,0,1" Grid.Row="1" Foreground="#FFCD2020"/>
+            </Grid>
         </DockPanel>
     </Grid>
 </UserControl>
