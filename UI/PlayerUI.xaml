@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Othello.UI"
              mc:Ignorable="d" Height="288.068" Width="165.341">
-    <Grid Background="Black">
-        <Label x:Name="lbl_score" Content="{Binding NumberOfPawns}" HorizontalAlignment="Left" Margin="84,61,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label x:Name="lbl_time" Content="{Binding SecondsElapsed}" HorizontalAlignment="Left" Margin="84,30,0,0" VerticalAlignment="Top" Foreground="White" />
-        <Label x:Name="lbl_txt_score" Content="Score" HorizontalAlignment="Left" Margin="17,61,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8"/>
-        <Label x:Name="lbl_txt_time" Content="Time" HorizontalAlignment="Left" Margin="17,30,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8"/>
+    <Grid x:Name="grid_player">
+        <Label x:Name="lbl_score" Content="{Binding NumberOfPawns}" HorizontalAlignment="Left" Margin="85,45,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <Label x:Name="lbl_time" Content="{Binding SecondsElapsed}" HorizontalAlignment="Left" Margin="85,14,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" />
+        <Label x:Name="lbl_txt_score" Content="Score" HorizontalAlignment="Left" Margin="18,45,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8" FontWeight="Bold"/>
+        <Label x:Name="lbl_txt_time" Content="Time" HorizontalAlignment="Left" Margin="18,14,0,0" VerticalAlignment="Top" Foreground="#FFFCF8F8" FontWeight="Bold"/>
     </Grid>
 </UserControl>
