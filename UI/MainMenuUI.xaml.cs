@@ -26,14 +26,6 @@ namespace Othello.UI
         public MainMenuUI()
         {
             InitializeComponent();
-
-            PlayerData data = new PlayerData();
-            data.NumberOfPawns = 55;
-
-            Tools.SerializeToFile("testfile", data);
-            PlayerData data2 = (PlayerData)Tools.DeserializeFromFile("testfile");
-
-            Console.WriteLine(data2.NumberOfPawns);
         }
 
         private void OnLoadClicked(object sender, RoutedEventArgs e)
@@ -48,36 +40,16 @@ namespace Othello.UI
             mainWindow.Quit();
         }
 
-        private void btn_pvp_Click(object sender, RoutedEventArgs e)
+        private void OnPvpClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LaunchShowGame(new OthelloLogic());
         }
 
-        private void btn_pvia_Click(object sender, RoutedEventArgs e)
+        private void OnPviaClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LaunchShowGame(new OthelloLogic());
-        }
-
-        private void btn_quit_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.Quit();
-        }
-
-        private void btn_load_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            OpenFileDialog dialog = new OpenFileDialog();
-            OthelloLogic dataSave = null;
-
-            if (dialog.ShowDialog() == true)
-            {
-                dataSave = (OthelloLogic)Tools.DeserializeFromFile(dialog.FileName);
-                dataSave.InitTimer();
-                mainWindow.LaunchShowGame(dataSave);
-            }
         }
     }
 }
