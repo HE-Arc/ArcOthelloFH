@@ -143,5 +143,12 @@
   <ItemGroup>
     <Resource Include="Resources\White_Pawn.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Geralt_Avatar.png" />
+    <Resource Include="Resources\Yen_Avatar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
