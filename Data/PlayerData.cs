@@ -13,7 +13,7 @@ namespace Othello.Data
     [Serializable]
     public class PlayerData : INotifyPropertyChanged
     {
-        private int numberOfPawns = 0;
+        private int numberOfPawns = 2;
         private int secondsElapsed = 0;
         private bool hasSkippedLastTurn = false;
 
