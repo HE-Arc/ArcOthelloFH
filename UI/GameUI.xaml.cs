@@ -264,16 +264,16 @@ namespace Othello.UI
             mainWindow.SaveGame(logic);
         }
 
-        private void item_save_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.SaveGame(logic);
-        }
-
-        private void item_quit_Click(object sender, RoutedEventArgs e)
+        private void OnQuitClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Quit();
+        }
+
+        private void OnReturnMenuClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.LaunchMainMenu();
         }
     }
 }

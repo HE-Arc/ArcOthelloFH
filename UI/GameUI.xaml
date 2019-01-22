@@ -18,9 +18,10 @@
             </DockPanel.Background>
             <Menu x:Name="menu_game" DockPanel.Dock="Top" Height="29" VerticalAlignment="Top">
                 <MenuItem x:Name="item_file" Header="File" Height="28" Width="35">
-                    <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="140" Click="OnLoadClicked"/>
-                    <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="140" Click="item_save_Click"/>
-                    <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140" Click="item_quit_Click"/>
+                    <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="200" Click="OnLoadClicked"/>
+                    <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="200" Click="OnSaveClicked"/>
+                    <MenuItem x:Name="item_return_menu" Header="Return to menu" HorizontalAlignment="Left" Height="28" Width="200" Click="OnReturnMenuClicked"/>
+                    <MenuItem x:Name="item_quit_Copy" Header="Quit" HorizontalAlignment="Left" Height="28" Width="200" Click="OnQuitClicked"/>
                 </MenuItem>
                 <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
                     <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Click="OnUndoClicked"/>
