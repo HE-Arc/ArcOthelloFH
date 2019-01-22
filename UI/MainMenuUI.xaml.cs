@@ -51,13 +51,13 @@ namespace Othello.UI
         private void btn_pvp_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.LaunchShowGame(new OthelloBoardLogic());
+            mainWindow.LaunchShowGame(new OthelloLogic());
         }
 
         private void btn_pvia_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.LaunchShowGame(new OthelloBoardLogic());
+            mainWindow.LaunchShowGame(new OthelloLogic());
         }
 
         private void btn_quit_Click(object sender, RoutedEventArgs e)
@@ -70,11 +70,11 @@ namespace Othello.UI
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             OpenFileDialog dialog = new OpenFileDialog();
-            OthelloBoardLogic dataSave = null;
+            OthelloLogic dataSave = null;
 
             if (dialog.ShowDialog() == true)
             {
-                dataSave = (OthelloBoardLogic)Tools.DeserializeFromFile(dialog.FileName);
+                dataSave = (OthelloLogic)Tools.DeserializeFromFile(dialog.FileName);
                 dataSave.InitTimer();
                 mainWindow.LaunchShowGame(dataSave);
             }

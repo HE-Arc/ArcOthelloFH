@@ -15,12 +15,12 @@ namespace Othello.Data
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="row">Value for row</param>
         /// <param name="column">Value for column</param>
-        public IntPosition(int row = -1, int column = -1)
+        /// <param name="row">Value for row</param>
+        public IntPosition(int column = -1, int row = -1)
         {
-            this.row = row;
             this.column = column;
+            this.row = row;
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace Othello.Data
             StringBuilder builder = new StringBuilder();
             builder.Append(this.GetType().Name);
             builder.Append(":");
-            builder.Append(row);
-            builder.Append(":");
             builder.Append(column);
+            builder.Append(":");
+            builder.Append(row);
             return builder.ToString();
         }
 
@@ -46,7 +46,7 @@ namespace Othello.Data
         /// <returns></returns>
         public static IntPosition operator+(IntPosition intA, IntPosition intB)
         {
-            return new IntPosition(intA.Row + intB.Row, intA.Column + intB.Column);
+            return new IntPosition(intA.Column + intB.Column, intA.Row + intB.Row);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Othello.Data
         /// <returns></returns>
         public static IntPosition operator-(IntPosition intA, IntPosition intB)
         {
-            return new IntPosition(intA.Row - intB.Row, intA.Column - intB.Column);
+            return new IntPosition(intA.Column - intB.Column, intA.Row - intB.Row);
         }
 
         /// <summary>

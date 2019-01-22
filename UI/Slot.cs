@@ -32,24 +32,24 @@ namespace Othello.UI
         /// </summary>
         /// <param name="row">Row of the slot in the grid</param>
         /// <param name="column">Column of the slot in the grid</param>
-        public Slot(int row, int column): base()
+        public Slot(int column, int row): base()
         {
             this.Style = this.FindResource("slotStyle") as Style;
-            this.AttributeName(row, column);
+            this.AttributeName(column, row);
         }
 
         /// <summary>
         /// Give a specific name to the component
         /// </summary>
-        /// <param name="row">Row of the slot</param>
         /// <param name="column">Column of the slot</param>
-        private void AttributeName(int row, int column)
+        /// <param name="row">Row of the slot</param>
+        private void AttributeName(int column, int row)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("btn_");
-            builder.Append(row);
-            builder.Append("_");
             builder.Append(column);
+            builder.Append("_");
+            builder.Append(row);
 
             this.Name = builder.ToString();
         }
@@ -61,9 +61,9 @@ namespace Othello.UI
         public IntPosition GetPosition()
         {
             String[] splitted = this.Name.Split('_');
-            int row = int.Parse(splitted[1]);
-            int column = int.Parse(splitted[2]);
-            return new IntPosition(row, column);
+            int column = int.Parse(splitted[1]);
+            int row = int.Parse(splitted[2]);
+            return new IntPosition(column, row);
         }
 
         // Todo: Modify the parameter with enum
