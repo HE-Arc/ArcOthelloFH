@@ -14,17 +14,26 @@ namespace Othello.UI
         private static readonly BitmapImage WHITE_PAWN = null;
         private static readonly Brush MARK_COLOR;
         private static readonly Brush UNMARK_COLOR;
+        private static readonly ImageBrush UNMARK_IMAGE;
 
         static Slot()
         {
             Uri blackPawnUri = new Uri("pack://application:,,,/Othello;component/Resources/Black_Pawn.png", UriKind.Absolute);
             Uri whitePawnUri = new Uri("pack://application:,,,/Othello;component/Resources/White_Pawn.png", UriKind.Absolute);
+            Uri wolfPawnUri = new Uri("pack://application:,,,/Othello;component/Resources/Wolf_Pawn.png", UriKind.Absolute);
+            Uri medalPawnUri = new Uri("pack://application:,,,/Othello;component/Resources/Medal_Pawn.png", UriKind.Absolute);
+            Uri woodenBackgroundUri = new Uri("pack://application:,,,/Othello;component/Resources/wood1.jpg", UriKind.Absolute);
 
-            BLACK_PAWN = new BitmapImage(blackPawnUri);
-            WHITE_PAWN = new BitmapImage(whitePawnUri);
+            BLACK_PAWN = new BitmapImage(medalPawnUri);
+            WHITE_PAWN = new BitmapImage(wolfPawnUri);
 
             MARK_COLOR = Brushes.DarkRed;
             UNMARK_COLOR = Brushes.Green;
+
+            UNMARK_IMAGE = new ImageBrush();
+            UNMARK_IMAGE.ImageSource = new BitmapImage(woodenBackgroundUri);
+
+            
         }
 
         /// <summary>
@@ -102,7 +111,7 @@ namespace Othello.UI
         {
             if(this.IsMarked())
             {
-                this.Background = UNMARK_COLOR;
+                this.Background = UNMARK_IMAGE;
             }
             
         }

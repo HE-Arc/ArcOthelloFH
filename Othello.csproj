@@ -168,5 +168,14 @@
     <Resource Include="Resources\Geralt_Avatar.png" />
     <Resource Include="Resources\Yen_Avatar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\wood1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Medal_Pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Wolf_Pawn.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
