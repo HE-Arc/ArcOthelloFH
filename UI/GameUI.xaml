@@ -7,6 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="321.867" d:DesignWidth="434.933" Foreground="{x:Null}">
 
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+O" Command="Open"/>
+        <KeyBinding Gesture="Ctrl+S" Command="SaveAs"/>
+        <KeyBinding Gesture="Ctrl+Q" Command="Close"/>
+        <KeyBinding Gesture="Ctrl+Z" Command="Undo"/>
+    </UserControl.InputBindings>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Open" Executed="OnLoadClicked"/>
+        <CommandBinding Command="SaveAs" Executed="OnSaveClicked"/>
+        <CommandBinding Command="Close" Executed="OnQuitClicked"/>
+        <CommandBinding Command="Undo" Executed="OnUndoClicked"/>
+    </UserControl.CommandBindings>
+
     <Grid x:Name="grid_gameui" Margin="0,0,0.2,-0.4">
         <Grid.RowDefinitions>
             <RowDefinition Height="300*"/>
@@ -17,14 +30,14 @@
                 <ImageBrush ImageSource="/Othello;component/Resources/Background.jpg" Stretch="UniformToFill"/>
             </DockPanel.Background>
             <Menu x:Name="menu_game" DockPanel.Dock="Top" Height="29" VerticalAlignment="Top">
-                <MenuItem x:Name="item_file" Header="File" Height="28" Width="35">
-                    <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="200" Click="OnLoadClicked"/>
-                    <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="200" Click="OnSaveClicked"/>
-                    <MenuItem x:Name="item_return_menu" Header="Return to menu" HorizontalAlignment="Left" Height="28" Width="200" Click="OnReturnMenuClicked"/>
-                    <MenuItem x:Name="item_quit_Copy" Header="Quit" HorizontalAlignment="Left" Height="28" Width="200" Click="OnQuitClicked"/>
+                <MenuItem x:Name="item_file" Header="File" Height="28" Width="35" Loaded="OnLoaded">
+                    <MenuItem x:Name="item_load" Header="Load..." HorizontalAlignment="Left" Height="28" Width="250" Command="Open"/>
+                    <MenuItem x:Name="item_save" Header="Save..." HorizontalAlignment="Left" Height="28" Width="250" Command="SaveAs" InputGestureText="Ctrl+S"/>
+                    <MenuItem x:Name="item_return_menu" Header="Return to menu" HorizontalAlignment="Left" Height="28" Width="250" Click="OnReturnMenuClicked"/>
+                    <MenuItem x:Name="item_quit_Copy" Header="Quit" HorizontalAlignment="Left" Height="28" Width="250" Command="Close" InputGestureText="Ctrl+Q"/>
                 </MenuItem>
                 <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
-                    <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Click="OnUndoClicked"/>
+                    <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Command="Undo"/>
                     <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Click="OnEndOfTurnClicked"/>
                 </MenuItem>
             </Menu>

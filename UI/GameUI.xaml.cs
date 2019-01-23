@@ -39,15 +39,13 @@ namespace Othello.UI
 
             // Prepare the grid
             grid = new OthelloGrid(new IntPosition(this.logic.Columns, this.logic.Rows));
-                        Viewbox box = new Viewbox();
+            Viewbox box = new Viewbox();
             box.Child = grid;
             box.Stretch = System.Windows.Media.Stretch.Uniform;
             main_dock_panel.Children.Add(box);
 
             // Events
             grid.EventSlotClicked += OnSlotClicked;
-            //this.game_controls_ui.EventUndoClicked += OnUndoClicked;
-            //this.game_controls_ui.EventEndTurnClicked += OnEndOfTurnClicked;
 
             // Init the game
             InitGame();
@@ -274,6 +272,12 @@ namespace Othello.UI
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LaunchMainMenu();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.Focusable = true;
+            Keyboard.Focus(this);
         }
     }
 }
