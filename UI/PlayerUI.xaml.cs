@@ -25,11 +25,18 @@ namespace Othello.UI
             BLACK_BACKGROUND = new BitmapImage(yenAvatar);
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PlayerUI()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Change style: Player.Black -> Yennefer, Player.White -> Geralt
+        /// </summary>
+        /// <param name="player">Player color: Player.Black -> Yennefer, Player.White -> Geralt</param>
         public void ChangeStyle(Player player)
         {
             ImageBrush imageBrush =  new ImageBrush();
