@@ -16,13 +16,61 @@
                 <MenuItem x:Name="item_quit" Header="Quit" HorizontalAlignment="Left" Height="28" Width="140" Click="OnQuitClicked"/>
             </MenuItem>
         </Menu>
-        <StackPanel Margin="83,40,87,43" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label x:Name="lbl_title" Content="Othello" VerticalAlignment="Center" Foreground="White" FontSize="24" Margin="0,0,0,25" Width="100" HorizontalAlignment="Center"/>
+        <StackPanel x:Name="stackPanel" Margin="83,40,87,43" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label x:Name="lbl_title" Content="Othello" VerticalAlignment="Center" Foreground="White" FontSize="96" Margin="0,0,0,25" HorizontalAlignment="Center" FontFamily="/Othello;component/Fonts/#Morpheus"/>
 
-            <Button x:Name="btn_pvp" Content="Player vs Player" Margin="0,5" Click="OnPvpClicked" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
-            <Button x:Name="btn_pvia" Content="Player vs IA" Margin="0,5" Click="OnPviaClicked" IsEnabled="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
-            <Button x:Name="btn_load" Content="Load" Margin="0,5" Click="OnLoadClicked" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
-            <Button x:Name="btn_quit" Content="Quit" Margin="0,5" Click="OnQuitClicked" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
+            <Button x:Name="btn_pvp" Content="Player vs Player" Margin="0,5" Click="OnPvpClicked" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/Othello;component/Fonts/#Morpheus" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}" FontSize="24" BorderBrush="{x:Null}" Foreground="#FFAEAEAE">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF898383" Offset="1"/>
+                        <GradientStop Color="#FF565656" Offset="0.717"/>
+                        <GradientStop Color="#FE292929" Offset="0.383"/>
+                        <GradientStop Color="#FE424242" Offset="0.58"/>
+                        <GradientStop Color="#FF8B8B8B" Offset="0.943"/>
+                        <GradientStop Color="#FE121212"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_pvia" Content="Player vs IA" Margin="0,5" Click="OnPviaClicked" IsEnabled="False" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/Othello;component/Fonts/#Morpheus" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}" FontSize="24" Foreground="#FFAEAEAE">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF898383" Offset="1"/>
+                        <GradientStop Color="#FF565656" Offset="0.717"/>
+                        <GradientStop Color="#FE292929" Offset="0.383"/>
+                        <GradientStop Color="#FE424242" Offset="0.58"/>
+                        <GradientStop Color="#FF8B8B8B" Offset="0.943"/>
+                        <GradientStop Color="#FE121212"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_load" Content="Load" Margin="0,5" Click="OnLoadClicked" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/Othello;component/Fonts/#Morpheus" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}" FontSize="24" BorderBrush="{x:Null}" Foreground="#FFAEAEAE">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF898383" Offset="1"/>
+                        <GradientStop Color="#FF565656" Offset="0.717"/>
+                        <GradientStop Color="#FE292929" Offset="0.383"/>
+                        <GradientStop Color="#FE424242" Offset="0.58"/>
+                        <GradientStop Color="#FF8B8B8B" Offset="0.943"/>
+                        <GradientStop Color="#FE121212"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_quit" Content="Quit" Margin="0,5" Click="OnQuitClicked" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="/Othello;component/Fonts/#Morpheus" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}" FontSize="24" BorderBrush="{x:Null}" Foreground="#FFAEAEAE">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF898383" Offset="1"/>
+                        <GradientStop Color="#FF565656" Offset="0.717"/>
+                        <GradientStop Color="#FE292929" Offset="0.383"/>
+                        <GradientStop Color="#FE424242" Offset="0.58"/>
+                        <GradientStop Color="#FF8B8B8B" Offset="0.943"/>
+                        <GradientStop Color="#FE121212"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </StackPanel>
 
     </Grid>
