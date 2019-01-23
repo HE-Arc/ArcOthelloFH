@@ -1,4 +1,11 @@
-﻿using Microsoft.Win32;
+﻿/// ----------------------------------------------------------------------------------
+/// Othello
+/// 
+/// Course : C#
+/// Authors: Malik Fleury, Thibault Haldenwang
+/// ----------------------------------------------------------------------------------
+
+using Microsoft.Win32;
 using Othello;
 using Othello.Data;
 using System;
@@ -28,24 +35,44 @@ namespace Othello.UI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Load game from file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnLoadClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LoadSaveGame();
         }
 
+        /// <summary>
+        /// Quit the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnQuitClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Quit();
         }
 
+        /// <summary>
+        /// Launch game : player vs player
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPvpClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LaunchShowGame(new OthelloLogic());
         }
 
+        /// <summary>
+        /// Launch game : player vs ia
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPviaClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;

@@ -1,6 +1,11 @@
-﻿using Microsoft.Win32;
-using Othello;
-using Othello.UI;
+﻿/// ----------------------------------------------------------------------------------
+/// Othello
+/// 
+/// Course : C#
+/// Authors: Malik Fleury, Thibault Haldenwang
+/// ----------------------------------------------------------------------------------
+
+
 using Othello.Data;
 using System;
 using System.Collections.Generic;
@@ -55,6 +60,10 @@ namespace Othello.UI
             ShowCurrentPlayerTurn();
         }
 
+
+        /// <summary>
+        /// Init the game : update the grid and change style of playerui
+        /// </summary>
         public void InitGame()
         {
             // Update the visual of the grid with data
@@ -143,7 +152,7 @@ namespace Othello.UI
         }
 
         /// <summary>
-        /// TODO
+        /// Compare score and print who win the game. Return to main menu.
         /// </summary>
         public void EndGame()
         {
@@ -225,6 +234,11 @@ namespace Othello.UI
             PrepareNextTurn();
         }
 
+        /// <summary>
+        /// Execute undo
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         public void OnUndoClicked(object sender, EventArgs e)
         {
             try
@@ -242,6 +256,11 @@ namespace Othello.UI
             }
         }
 
+        /// <summary>
+        /// Execute stuff when a slot is clicked
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         public void OnSlotClicked(object sender, EventArgs e)
         {
             Slot slot = sender as Slot;
@@ -250,30 +269,55 @@ namespace Othello.UI
             PlayMove(position);
         }
 
+        /// <summary>
+        /// Load game from file
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         private void OnLoadClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LoadSaveGame();
         }
 
+        /// <summary>
+        /// Save the current game to a file
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         private void OnSaveClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.SaveGame(logic);
         }
 
+        /// <summary>
+        /// Quit the game
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         private void OnQuitClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Quit();
         }
 
+        /// <summary>
+        /// Go to main menu
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         private void OnReturnMenuClicked(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.LaunchMainMenu();
         }
 
+        /// <summary>
+        /// Focus the component at the end of loading
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="e">Event</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Focusable = true;

@@ -12,12 +12,14 @@
         <KeyBinding Gesture="Ctrl+S" Command="SaveAs"/>
         <KeyBinding Gesture="Ctrl+Q" Command="Close"/>
         <KeyBinding Gesture="Ctrl+Z" Command="Undo"/>
+        <KeyBinding Gesture="Ctrl+Y" Command="Redo"/>
     </UserControl.InputBindings>
     <UserControl.CommandBindings>
         <CommandBinding Command="Open" Executed="OnLoadClicked"/>
         <CommandBinding Command="SaveAs" Executed="OnSaveClicked"/>
         <CommandBinding Command="Close" Executed="OnQuitClicked"/>
         <CommandBinding Command="Undo" Executed="OnUndoClicked"/>
+        <CommandBinding Command="Redo" Executed="OnEndOfTurnClicked"/>
     </UserControl.CommandBindings>
 
     <Grid x:Name="grid_gameui" Margin="0,0,0.2,-0.4">
@@ -38,7 +40,7 @@
                 </MenuItem>
                 <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
                     <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Command="Undo"/>
-                    <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Click="OnEndOfTurnClicked"/>
+                    <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Command="Redo"/>
                 </MenuItem>
             </Menu>
             <Grid x:Name="grid_players" Margin="0,0.2,0,-0.2" Background="Black" MinWidth="148" Width="148">

@@ -1,4 +1,11 @@
-﻿using Othello.UI;
+﻿/// ----------------------------------------------------------------------------------
+/// Othello
+/// 
+/// Course : C#
+/// Authors: Malik Fleury, Thibault Haldenwang
+/// ----------------------------------------------------------------------------------
+
+using Othello.UI;
 using Othello.Data;
 using System;
 using System.Text;
@@ -14,6 +21,10 @@ namespace Othello.UI
 
         private EventHandler eventSlotClicked;
 
+        /// <summary>
+        /// Overload constructor : can define the size of the grid
+        /// </summary>
+        /// <param name="size">Size of the grid</param>
         public OthelloGrid(IntPosition size) : base()
         {
             this.slotsArray = new Slot[size.Column, size.Row];
@@ -21,6 +32,10 @@ namespace Othello.UI
             this.PrepareGeometry(size);
         }
 
+        /// <summary>
+        /// Prepare the grid
+        /// </summary>
+        /// <param name="size">Size of the grid</param>
         public void PrepareGeometry(IntPosition size)
         {
             StringBuilder builder = new StringBuilder();
@@ -60,6 +75,11 @@ namespace Othello.UI
             }
         }
 
+        /// <summary>
+        /// Manage the click and throw the event to EventSlotClicked
+        /// </summary>
+        /// <param name="sender">Component who sent the event</param>
+        /// <param name="args">Event</param>
         public void OnClickEvent(Object sender, RoutedEventArgs args)
         {
             EventHandler handler = eventSlotClicked;
@@ -69,13 +89,19 @@ namespace Othello.UI
                 handler(sender, args);
             }
         }
-
+        
+        /// <summary>
+        /// Getter and setter of the event "SlotClicked"
+        /// </summary>
         public EventHandler EventSlotClicked
         {
             get { return this.eventSlotClicked; }
             set { this.eventSlotClicked = value; }
         }
 
+        /// <summary>
+        /// Getter of the array of slots
+        /// </summary>
         public Slot[,] SlotsArray
         {
             get { return slotsArray; }
