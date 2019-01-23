@@ -140,6 +140,9 @@ namespace Othello.UI
                 else
                 {
                     PrepareNextTurn();
+                    logic.SwitchPlayer();
+                    ExecuteBefore();
+                    ShowCurrentPlayerTurn();
                 }
             }
             else
@@ -181,6 +184,11 @@ namespace Othello.UI
             mainWindow.LaunchMainMenu();
         }
 
+        /// <summary>
+        /// End player turn.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnEndOfTurnClicked(object sender, EventArgs e)
         {
             if(hasPlayed)
@@ -208,6 +216,8 @@ namespace Othello.UI
                 {
                     grid.SlotsArray[pawnPosition.Column, pawnPosition.Row].SetContent((SlotContent)logic.PlayerTurn);
                 }
+
+                            hasPlayed = true;
 
                 logic.UpdateSlots(pawnsToFlip);
 
@@ -265,7 +275,6 @@ namespace Othello.UI
         {
             Slot slot = sender as Slot;
             IntPosition position = slot.GetPosition();
-            hasPlayed = true;
             PlayMove(position);
         }
 

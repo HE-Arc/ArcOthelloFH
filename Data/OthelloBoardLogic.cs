@@ -250,12 +250,10 @@ namespace Othello.Data
                     }
                 }
             }
-
+           
             if(possibleMovesList.Count == 0)
             {
-                //SKIP TURN
                 SkipCurrentPlayerTurn();
-
             }
             else
             {
@@ -268,11 +266,9 @@ namespace Othello.Data
         private void SkipCurrentPlayerTurn()
         {
             PlayerData oppositePlayerData = GetPlayerData(GetOppositePlayer(playerTurn));
-
             CurrentPlayerData.HasSkippedLastTurn = true;
             if(CurrentPlayerData.HasSkippedLastTurn && oppositePlayerData.HasSkippedLastTurn)
             {
-                //END GAME
                 isGameFinished = true;
             }
         }
@@ -460,7 +456,9 @@ namespace Othello.Data
             set { playerTurn = value; }
         }
 
-
+        /// <summary>
+        /// Get whether the game is finished
+        /// </summary>
         public bool IsGameFinished
         {
             get { return isGameFinished; }

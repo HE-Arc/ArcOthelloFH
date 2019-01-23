@@ -52,6 +52,10 @@ namespace Othello.IA
             return new Tuple<int, int>(nextMove.Item2.Column, nextMove.Item2.Row);
         }
 
+        /// <summary>
+        /// Check whether a state is terminal
+        /// </summary>
+        /// <returns></returns>
         private bool IsTerminal()
         {
             var possibleMoves = GetAllPossibleMoves();
@@ -68,6 +72,14 @@ namespace Othello.IA
             }
         }
 
+        /// <summary>
+        /// Simple alpha-beta algorithm
+        /// </summary>
+        /// <param name="nodeBoard">A particular game state</param>
+        /// <param name="depth">The maximum tree depth</param>
+        /// <param name="parentValue"></param>
+        /// <param name="maximizingPlayer"></param>
+        /// <returns></returns>
         private Tuple<int, IntPosition> AlphaBeta(AIBoard nodeBoard, int depth, int parentValue, bool maximizingPlayer)
         {
             if(depth == 0 || nodeBoard.IsTerminal())
@@ -97,6 +109,13 @@ namespace Othello.IA
             }
         }
 
+        /// <summary>
+        /// Creates an AIBoard class given the position of a move to play
+        /// and the board where the move has to be played.
+        /// </summary>
+        /// <param name="position">The position of the pawn to play on the board</param>
+        /// <param name="sourceBoard">The board where the move takes place</param>
+        /// <returns>A new AIBoard with the updated game state</returns>
         private AIBoard PosToBoard(IntPosition position, AIBoard sourceBoard)
         {
             AIBoard newBoard = new AIBoard
