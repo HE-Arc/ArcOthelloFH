@@ -22,7 +22,26 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="DarkGreen"/>
+
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect x:Name="shadowEffect" Direction="0" Color="GreenYellow" BlurRadius="10" ShadowDepth="1"></DropShadowEffect>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Canvas.ZIndex" Value="2"/>
+                    <Trigger.EnterActions>
+                        <BeginStoryboard Name="shadowStoryBoard">
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.Effect).(DropShadowEffect.Direction)" From="0" To="360" Duration="0:0:0:.8" RepeatBehavior="Forever"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Trigger.EnterActions>
+                        <StopStoryboard BeginStoryboardName="shadowStoryBoard"/>
+                    </Trigger.EnterActions>
                 </Trigger>
             </Style.Triggers>
         </Style>

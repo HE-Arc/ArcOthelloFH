@@ -171,5 +171,17 @@
   <ItemGroup>
     <Resource Include="Resources\Wolf_Pawn.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sound\lele.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sound\lelele.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sound\lelelele.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sound\le.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

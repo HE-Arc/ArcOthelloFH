@@ -260,9 +260,9 @@ namespace Othello.UI
                     ExecuteBefore();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.StackTrace);
             }
         }
 
@@ -331,6 +331,28 @@ namespace Othello.UI
         {
             this.Focusable = true;
             Keyboard.Focus(this);
+        }
+
+        /// <summary>
+        /// Start playing music
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnPlayClicked(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.TurnMusicOn();
+        }
+
+        /// <summary>
+        /// Stops the music
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnStopClicked(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.TurnMusicOff();
         }
     }
 }

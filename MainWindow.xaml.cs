@@ -2,7 +2,9 @@
 using Othello.Data;
 using Othello.UI;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Resources;
+using System.Media;
+using System;
 
 namespace Othello
 {
@@ -13,12 +15,14 @@ namespace Othello
     {
         private MainMenuUI menuUi = new MainMenuUI();
         private GameUI gameUi = null;
+        private SoundPlayer soundPlayer;
 
         public MainWindow()
         {
             InitializeComponent();
 
             grid_main.Children.Add(menuUi);
+            soundPlayer = new SoundPlayer();
         }
 
         public void LaunchMainMenu()
@@ -33,6 +37,7 @@ namespace Othello
 
             grid_main.Children.Remove(menuUi);
             grid_main.Children.Add(gameUi);
+    
         }
 
         public void LoadSaveGame()
@@ -68,6 +73,19 @@ namespace Othello
         private void OnLoadClicked(object sender, RoutedEventArgs e)
         {
             LoadSaveGame();
+        }
+
+        public void TurnMusicOff()
+        {
+            soundPlayer.Stop();
+        }
+
+        public void TurnMusicOn()
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(new Uri(@"pack://application:,,,/Othello;component/Sound/lelelele.wav", UriKind.Absolute));
+            soundPlayer.Stream = sri.Stream;
+            soundPlayer.LoadAsync();
+            soundPlayer.PlayLooping();
         }
     }
 }

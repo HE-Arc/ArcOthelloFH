@@ -13,6 +13,8 @@
         <KeyBinding Gesture="Ctrl+Q" Command="Close"/>
         <KeyBinding Gesture="Ctrl+Z" Command="Undo"/>
         <KeyBinding Gesture="Ctrl+Y" Command="Redo"/>
+        <KeyBinding Gesture="Ctrl+H" Command="Stop"/>
+        <KeyBinding Gesture="Ctrl+P" Command="Play"/>
     </UserControl.InputBindings>
     <UserControl.CommandBindings>
         <CommandBinding Command="Open" Executed="OnLoadClicked"/>
@@ -20,6 +22,8 @@
         <CommandBinding Command="Close" Executed="OnQuitClicked"/>
         <CommandBinding Command="Undo" Executed="OnUndoClicked"/>
         <CommandBinding Command="Redo" Executed="OnEndOfTurnClicked"/>
+        <CommandBinding Command="Play" Executed="OnPlayClicked"/>
+        <CommandBinding Command="Stop" Executed="OnStopClicked"/>
     </UserControl.CommandBindings>
 
     <Grid x:Name="grid_gameui" Margin="0,0,0.2,-0.4">
@@ -38,9 +42,13 @@
                     <MenuItem x:Name="item_return_menu" Header="Return to menu" HorizontalAlignment="Left" Height="28" Width="250" Click="OnReturnMenuClicked"/>
                     <MenuItem x:Name="item_quit_Copy" Header="Quit" HorizontalAlignment="Left" Height="28" Width="250" Command="Close" InputGestureText="Ctrl+Q"/>
                 </MenuItem>
-                <MenuItem x:Name="item_turn" Header="Turn" Height="28" Width="35">
+                <MenuItem x:Name="item_turn" Header="Turn" Height="28">
                     <MenuItem x:Name="item_undo" Header="Undo" HorizontalAlignment="Left" Height="28" Width="140" Command="Undo"/>
                     <MenuItem x:Name="item_end_it" Header="End it" HorizontalAlignment="Left" Height="28" Width="140" Command="Redo"/>
+                </MenuItem>
+                <MenuItem x:Name="menu_music" Header="Sound" Height="28">
+                    <MenuItem x:Name="item_play" Header="Play" HorizontalAlignment="Left" Height="28" Width="140" Command="Play" InputGestureText="Ctrl+P"/>
+                    <MenuItem x:Name="item_stop" Header="Stop" HorizontalAlignment="Left" Height="28" Width="140" Command="Stop" InputGestureText="Ctrl+H"/>
                 </MenuItem>
             </Menu>
             <Grid x:Name="grid_players" Margin="0,0.2,0,-0.2" Background="Black" MinWidth="148" Width="148">
